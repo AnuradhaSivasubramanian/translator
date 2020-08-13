@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>Catalog</title>
+	</head>
+	<body>
+		<header>
+			<h1>Catalog</h1>
+			<h4>
+				User can view, add, update or delete a message in the Translator
+				        database
+			</h4>
+		</header>
+		<main>
+			<table class="list">
+				<tr>
+					<th>ID</th>
+					<th>Key Id</th>
+					<th>Language</th>
+					<th>Message</th>
+					<th>&nbsp;</th>
+					<th>&nbsp;</th>
+					<th>&nbsp;</th>
+
+				</tr>
+				{%  for entry in catalog %}
+					<tr>
+						<td>{{entry.id}}</td>
+						<td>{{entry.key_id}}</td>
+						<td>{{entry.language}}</td>
+						<td>{{entry.message}}</td>
+
+						<td>
+							<a class="action" href="{{path("view_entry", {'id_catalog': entry.id})}}">View</a>
+						</td>
+						<td>
+							<a class="action" href="{{path("modify_entry", {'id_catalog': entry.id})}}">Edit</a>
+						</td>
+						<td>
+							<a class="action" href="/catalog/delete/1">Delete</a>
+						</td>
+					</tr>
+				{% endfor %}
+
+
+			</table>
+			<ul>
+				<li><a class="a_link"href="{{path("home")}}">Home</a></li>
+				<li><a class="a_link"href="{{path("index_catalog")}}">Catalog</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
