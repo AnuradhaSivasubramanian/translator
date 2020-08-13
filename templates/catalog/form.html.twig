@@ -7,20 +7,26 @@
 	</head>
 	<body>
 		<header>
-			<h1>Edit Details for
-				{{key}}</h1>
+			<h1>{{mode == 'new' ? 'Add New Entry' : 'Modify Entry'}}</h1>
 
 		</header>
 		<main>
-			<h4>ID:
-				{{formdata.id}}
-			</h4>
-			<form action="" method="post">
 
+			<form action="" method="post">
+				<dl>
+					<dt>Key</dt>
+					<dd>
+						<select name="form[key]" class="form-select">
+							{% for translation_key in translation_keys %}
+								<option value="{{translation_key.id}}" {{translation_key.key == key ? 'selected' : "" }}>{{translation_key.key}}</option>
+							{% endfor %}
+						</select>
+					</dd>
+				</dl>
 				<dl>
 					<dt>Language</dt>
 					<dd>
-						<select name="language" class="form-select">
+						<select name="form[language]" class="form-select">
 							{% for language in languages %}
 								<option value="{{language}}" {{language == formdata.language ? 'selected' : "" }}>{{language}}</option>
 							{% endfor %}
@@ -29,7 +35,7 @@
 				</dl>
 				<dl>
 					<dt>Message</dt>
-					<dd><input type="text" name="message" value="{{formdata.message}}" class="form-input-name"/></dd>
+					<dd><input type="text" name="form[message]" value="{{formdata.message is defined ? formdata.message : ""}}" class="form-input-name"/></dd>
 				</dl>
 				<input type="submit" value="Submit">
 			</form>

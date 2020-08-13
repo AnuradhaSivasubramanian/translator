@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class CatalogController extends AbstractController
@@ -37,7 +37,7 @@ class CatalogController extends AbstractController
         ]
     ];
 
-    private $translation_key = [
+    private $translation_keys = [
         [
             'id' => 1,
             'key' => 'Hi'
@@ -67,8 +67,13 @@ class CatalogController extends AbstractController
      */
     public function showDetails(Request $request, $id_catalog)
     {
-
-        return $this->render('catalog/view.html.twig', ['id' => $id_catalog]);
+        foreach ($this->translation_keys as $key) {
+            if ($key['id'] === $this->catalog[$id_catalog - 1]['key_id']) {
+                $data['key'] = $key['key'];
+            }
+        }
+        $data['formdata'] = $this->catalog[$id_catalog - 1];
+        return $this->render('catalog/view.html.twig', $data);
     }
 
 
@@ -80,15 +85,29 @@ class CatalogController extends AbstractController
     public function modifyEntry(Request $request, $id_catalog)
     {
         $data = [];
-        foreach ($this->translation_key as $key) {
+        foreach ($this->translation_keys as $key) {
             if ($key['id'] === $this->catalog[$id_catalog - 1]['key_id']) {
                 $data['key'] = $key['key'];
             }
         }
-        $data['formdata'] = $this->catalog[$id_catalog - 1];
-        $data['mode'] = ['modify'];
-        $data['languages'] = ['nl', 'en'];
 
+        $data['mode'] = 'modify';
+        $data['languages'] = ['nl', 'en'];
+        $data['translation_keys'] = $this->translation_keys;
+
+        $form = $this->createFormBuilder()
+            ->add('key')
+            ->add('language')
+            ->add('message')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $data['formdata'] = $form->getData();
+        } else {
+            $data['formdata'] = $this->catalog[$id_catalog - 1];
+        }
         return $this->render('catalog/form.html.twig', $data);
     }
 
@@ -101,7 +120,13 @@ class CatalogController extends AbstractController
      */
     public function addEntry(Request $request)
     {
-        return $this->render('catalog/form.html.twig', ['mode' => 'new']);
+        $data['formdata'] = [];
+        $data['formdata']['language'] = "";
+        $data['key'] = '';
+        $data['languages'] = ['nl', 'en'];
+        $data['translation_keys'] = $this->translation_keys;
+        $data['mode'] = 'new';
+        return $this->render('catalog/form.html.twig', $data);
     }
 
     /**
