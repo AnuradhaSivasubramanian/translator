@@ -6,6 +6,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\TranslationMessage;
 
 class CatalogController extends AbstractController
 {
@@ -48,6 +49,7 @@ class CatalogController extends AbstractController
         ],
 
     ];
+
     /**  
      *
      * @Route("/catalog", name="index_catalog")
@@ -126,6 +128,30 @@ class CatalogController extends AbstractController
         $data['languages'] = ['nl', 'en'];
         $data['translation_keys'] = $this->translation_keys;
         $data['mode'] = 'new';
+
+        $form = $this->createFormBuilder()
+            ->add('key')
+            ->add('language')
+            ->add('message')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $form_data = $form->getData();
+            $data['formdata'] = [];
+            $data['formdata'] = $form_data;
+
+            $em = $this->getDoctrine()->getManager();
+            $message = new TranslationMessage;
+            $message->setTranslationKeyId($form_data['key']);
+            $message->setLanguage($form_data['language']);
+            $message->setMessage($form_data['message']);
+
+            $em->persist($message);
+
+            $em->flush();
+        }
         return $this->render('catalog/form.html.twig', $data);
     }
 
