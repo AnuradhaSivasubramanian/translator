@@ -27,7 +27,7 @@ class TranslationKey
         return $this->id;
     }
 
-    public function getTextKey(): ?string
+    public function getText_key(): ?string
     {
         return $this->text_key;
     }

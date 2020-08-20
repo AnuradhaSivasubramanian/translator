@@ -18,7 +18,7 @@
 					<dd>
 						<select name="form[key]" class="form-select">
 							{% for translation_key in translation_keys %}
-								<option value="{{translation_key.id}}" {{translation_key.key == key ? 'selected' : "" }}>{{translation_key.key}}</option>
+								<option value="{{translation_key.id}}" {{translation_key.text_key == formdata.text_key ? 'selected' : "" }}>{{translation_key.text_key}}</option>
 							{% endfor %}
 						</select>
 					</dd>

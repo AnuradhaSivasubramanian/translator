@@ -11,55 +11,19 @@ use App\Entity\TranslationMessage;
 class CatalogController extends AbstractController
 {
 
-    private $catalog = [
-        [
-            'id' => 1,
-            'key_id' => 1,
-            'language' => 'nl',
-            'message' => 'Hallo'
-        ],
-        [
-            'id' => 2,
-            'key_id' => 1,
-            'language' => 'en',
-            'message' => 'Hello'
-        ],
-        [
-            'id' => 3,
-            'key_id' => 2,
-            'language' => 'nl',
-            'message' => 'Tot Ziens'
-        ],
-        [
-            'id' => 4,
-            'key_id' => 2,
-            'language' => 'en',
-            'message' => 'See you!'
-        ]
-    ];
-
-    private $translation_keys = [
-        [
-            'id' => 1,
-            'key' => 'Hi'
-        ],
-        [
-            'id' => 2,
-            'key' => 'Bye'
-        ],
-
-    ];
-
     /**  
      *
      * @Route("/catalog", name="index_catalog")
      */
     public function showCatalog()
-
-
     {
-        $data = $this->catalog;
-        return $this->render('catalog/index.html.twig', ['catalog' => $data]);
+        $data = [];
+        $catalog = $this->getDoctrine()
+            ->getRepository('App:TranslationMessage')
+            ->findAll();
+
+        $data['catalog'] = $catalog;
+        return $this->render('catalog/index.html.twig',  $data);
     }
 
     /**
@@ -69,12 +33,24 @@ class CatalogController extends AbstractController
      */
     public function showDetails(Request $request, $id_catalog)
     {
-        foreach ($this->translation_keys as $key) {
-            if ($key['id'] === $this->catalog[$id_catalog - 1]['key_id']) {
-                $data['key'] = $key['key'];
-            }
-        }
-        $data['formdata'] = $this->catalog[$id_catalog - 1];
+
+
+        //Find the selected entry
+        $catalog_entry = $this->getDoctrine()
+            ->getRepository('App:TranslationMessage')
+            ->find($id_catalog);
+
+        //Find the text for the key of the entry
+        $translation_key = $this->getDoctrine()
+            ->getRepository('App:TranslationKey')
+            ->find($catalog_entry->getTranslationKeyId());
+
+        $catalog_data['id'] = $catalog_entry->getId();
+        $catalog_data['text_key'] = $translation_key->getText_key();
+        $catalog_data['language'] = $catalog_entry->getLanguage();
+        $catalog_data['message'] = $catalog_entry->getMessage();
+
+        $data['formdata'] = $catalog_data;
         return $this->render('catalog/view.html.twig', $data);
     }
 
@@ -87,15 +63,24 @@ class CatalogController extends AbstractController
     public function modifyEntry(Request $request, $id_catalog)
     {
         $data = [];
-        foreach ($this->translation_keys as $key) {
-            if ($key['id'] === $this->catalog[$id_catalog - 1]['key_id']) {
-                $data['key'] = $key['key'];
-            }
-        }
+
+        //Find the entry to be modified
+        $catalog_entry = $this->getDoctrine()
+            ->getRepository('App:TranslationMessage')
+            ->find($id_catalog);
+
+        //Find the text for the key of the entry
+        $translation_key = $this->getDoctrine()
+            ->getRepository('App:TranslationKey')
+            ->find($catalog_entry->getTranslationKeyId());
 
         $data['mode'] = 'modify';
         $data['languages'] = ['nl', 'en'];
-        $data['translation_keys'] = $this->translation_keys;
+
+        $translation_keys = $this->getDoctrine()
+            ->getRepository('App:TranslationKey')
+            ->findAll();
+        $data['translation_keys'] = $translation_keys;
 
         $form = $this->createFormBuilder()
             ->add('key')
@@ -106,9 +91,26 @@ class CatalogController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $data['formdata'] = $form->getData();
+            $form_data = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $catalog_entry->setTranslationKeyId($form_data['key']);
+            $catalog_entry->setLanguage($form_data['language']);
+            $catalog_entry->setMessage($form_data['message']);
+
+            $em->persist($catalog_entry);
+            $em->flush();
+
+            return $this->redirectToRoute('index_catalog');
         } else {
-            $data['formdata'] = $this->catalog[$id_catalog - 1];
+
+            $catalog_data['id'] = $catalog_entry->getId();
+            $catalog_data['text_key'] = $translation_key->getText_key();
+            $catalog_data['language'] = $catalog_entry->getLanguage();
+            $catalog_data['message'] = $catalog_entry->getMessage();
+
+            $data['formdata'] = $catalog_data;
         }
         return $this->render('catalog/form.html.twig', $data);
     }
@@ -126,8 +128,13 @@ class CatalogController extends AbstractController
         $data['formdata']['language'] = "";
         $data['key'] = '';
         $data['languages'] = ['nl', 'en'];
-        $data['translation_keys'] = $this->translation_keys;
         $data['mode'] = 'new';
+
+        $translation_keys = $this->getDoctrine()
+            ->getRepository('App:TranslationKey')
+            ->findAll();
+        $data['translation_keys'] = $translation_keys;
+
 
         $form = $this->createFormBuilder()
             ->add('key')
@@ -151,6 +158,8 @@ class CatalogController extends AbstractController
             $em->persist($message);
 
             $em->flush();
+
+            return $this->redirectToRoute('index_catalog');
         }
         return $this->render('catalog/form.html.twig', $data);
     }

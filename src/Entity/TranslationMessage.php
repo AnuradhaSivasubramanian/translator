@@ -38,7 +38,7 @@ class TranslationMessage
         return $this->id;
     }
 
-    public function getTranslationKeyId(): ?TranslationKey
+    public function getTranslationKeyId(): ?int
     {
         return $this->translation_key_id;
     }
