@@ -21,7 +21,10 @@ class CatalogController extends AbstractController
         $catalog = $this->getDoctrine()
             ->getRepository('App:TranslationMessage')
             ->findAll();
-
+        $translation_keys = $this->getDoctrine()
+            ->getRepository('App:TranslationKey')
+            ->findAll();
+        $data['translation_keys'] = $translation_keys;
         $data['catalog'] = $catalog;
         return $this->render('catalog/index.html.twig',  $data);
     }
@@ -126,6 +129,7 @@ class CatalogController extends AbstractController
     {
         $data['formdata'] = [];
         $data['formdata']['language'] = "";
+        $data['formdata']['text_key'] = "";
         $data['key'] = '';
         $data['languages'] = ['nl', 'en'];
         $data['mode'] = 'new';
@@ -166,10 +170,38 @@ class CatalogController extends AbstractController
 
     /**
      * 
-     *@Route("/catalog/delete", name="delete_entry")
+     *@Route("/catalog/delete/{id_catalog}", name="delete_entry")
      * 
      */
-    public function deleteEntry()
+    public function deleteEntry(Request $request, $id_catalog)
     {
+        //Find the selected entry
+        $catalog_entry = $this->getDoctrine()
+            ->getRepository('App:TranslationMessage')
+            ->find($id_catalog);
+
+        $catalog_data['language'] = $catalog_entry->getLanguage();
+        $catalog_data['message'] = $catalog_entry->getMessage();
+
+        $data['formdata'] = $catalog_data;
+        $form = $this->createFormBuilder()
+            ->add('submit')
+            ->getForm();
+
+        $form->handleRequest($request);
+        $data['submitdata'] = $form->isSubmitted();
+        if ($form->isSubmitted()) {
+
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->remove($catalog_entry);
+
+            $em->flush();
+
+            return $this->redirectToRoute('index_catalog');
+        }
+
+        return $this->render('catalog/delete.html.twig', $data);
     }
 }

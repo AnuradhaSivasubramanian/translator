@@ -10,7 +10,7 @@
 			<h1>Catalog</h1>
 			<h4>
 				User can view, add, update or delete a message in the Translator
-																				        database
+																																																																        database
 			</h4>
 		</header>
 		<main>
@@ -18,7 +18,8 @@
 			<table class="list">
 				<tr>
 					<th>ID</th>
-					<th>Key Id</th>
+					<th>Key
+					</th>
 					<th>Language</th>
 					<th>Message</th>
 					<th>&nbsp;</th>
@@ -29,7 +30,13 @@
 				{%  for entry in catalog %}
 					<tr>
 						<td>{{entry.id}}</td>
-						<td>{{entry.translationKeyId}}</td>
+						{% for translation_key in translation_keys %}
+							{% if translation_key.id == entry.translationKeyId %}
+								<td>{{translation_key.text_key}}</td>
+							{% endif %}
+
+						{% endfor %}
+
 						<td>{{entry.language}}</td>
 						<td>{{entry.message}}</td>
 
@@ -40,7 +47,7 @@
 							<a class="action" href="{{path("modify_entry", {'id_catalog': entry.id})}}">Edit</a>
 						</td>
 						<td>
-							<a class="action" href="/catalog/delete/1">Delete</a>
+							<a class="action" href="{{path("delete_entry", {'id_catalog': entry.id})}}">Delete</a>
 						</td>
 					</tr>
 				{% endfor %}
