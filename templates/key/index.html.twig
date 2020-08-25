@@ -3,44 +3,35 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>Catalog</title>
+		<title>Translator Key</title>
 	</head>
 	<body>
 		<header>
-			<h1>Catalog</h1>
+			<h1>Keys</h1>
 			<h4>
-				User can view, add, update or delete a message in the Translator Messages
+				User can view, add, update or delete a key in the Translator Keys
 			</h4>
 		</header>
 		<main>
-			<a class="action" href="{{path("new_entry")}}">Create new entry</a>
+			{# <a class="action" href="{{path("new_key")}}">Create new key</a> #}
 			<table class="list">
 				<tr>
 					<th>ID</th>
-					<th>Key
-					</th>
-					<th>Language</th>
-					<th>Message</th>
+					<th>Text</th>
+
 					<th>&nbsp;</th>
 					<th>&nbsp;</th>
 					<th>&nbsp;</th>
 
 				</tr>
-				{%  for entry in catalog %}
+				{%  for entry in translation_keys %}
 					<tr>
 						<td>{{entry.id}}</td>
-						{% for translation_key in translation_keys %}
-							{% if translation_key.id == entry.translationKeyId %}
-								<td>{{translation_key.text_key}}</td>
-							{% endif %}
 
-						{% endfor %}
 
-						<td>{{entry.language}}</td>
-						<td>{{entry.message}}</td>
-
+						<td>{{entry.textKey}}</td>
 						<td>
-							<a class="action" href="{{path("view_entry", {'id_catalog': entry.id})}}">View</a>
+							<a class="action" href="{{path("view_key", {'id_key': entry.id})}}">View</a>
 						</td>
 						<td>
 							<a class="action" href="{{path("modify_entry", {'id_catalog': entry.id})}}">Edit</a>

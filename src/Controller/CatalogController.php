@@ -18,12 +18,17 @@ class CatalogController extends AbstractController
     public function showCatalog()
     {
         $data = [];
+
+        //find all entries from the catalog
         $catalog = $this->getDoctrine()
             ->getRepository('App:TranslationMessage')
             ->findAll();
+
+        //find all translation keys    
         $translation_keys = $this->getDoctrine()
             ->getRepository('App:TranslationKey')
             ->findAll();
+
         $data['translation_keys'] = $translation_keys;
         $data['catalog'] = $catalog;
         return $this->render('catalog/index.html.twig',  $data);
@@ -96,14 +101,14 @@ class CatalogController extends AbstractController
         if ($form->isSubmitted()) {
             $form_data = $form->getData();
 
-            $em = $this->getDoctrine()->getManager();
+            $entitymanager = $this->getDoctrine()->getManager();
 
             $catalog_entry->setTranslationKeyId($form_data['key']);
             $catalog_entry->setLanguage($form_data['language']);
             $catalog_entry->setMessage($form_data['message']);
 
-            $em->persist($catalog_entry);
-            $em->flush();
+            $entitymanager->persist($catalog_entry);
+            $entitymanager->flush();
 
             return $this->redirectToRoute('index_catalog');
         } else {
@@ -153,15 +158,15 @@ class CatalogController extends AbstractController
             $data['formdata'] = [];
             $data['formdata'] = $form_data;
 
-            $em = $this->getDoctrine()->getManager();
+            $entitymanager = $this->getDoctrine()->getManager();
             $message = new TranslationMessage;
             $message->setTranslationKeyId($form_data['key']);
             $message->setLanguage($form_data['language']);
             $message->setMessage($form_data['message']);
 
-            $em->persist($message);
+            $entitymanager->persist($message);
 
-            $em->flush();
+            $entitymanager->flush();
 
             return $this->redirectToRoute('index_catalog');
         }
@@ -193,11 +198,11 @@ class CatalogController extends AbstractController
         if ($form->isSubmitted()) {
 
 
-            $em = $this->getDoctrine()->getManager();
+            $entitymanager = $this->getDoctrine()->getManager();
 
-            $em->remove($catalog_entry);
+            $entitymanager->remove($catalog_entry);
 
-            $em->flush();
+            $entitymanager->flush();
 
             return $this->redirectToRoute('index_catalog');
         }
