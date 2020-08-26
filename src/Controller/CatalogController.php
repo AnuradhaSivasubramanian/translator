@@ -54,7 +54,7 @@ class CatalogController extends AbstractController
             ->find($catalog_entry->getTranslationKeyId());
 
         $catalog_data['id'] = $catalog_entry->getId();
-        $catalog_data['text_key'] = $translation_key->getText_key();
+        $catalog_data['text_key'] = $translation_key->getTextKey();
         $catalog_data['language'] = $catalog_entry->getLanguage();
         $catalog_data['message'] = $catalog_entry->getMessage();
 
@@ -114,7 +114,7 @@ class CatalogController extends AbstractController
         } else {
 
             $catalog_data['id'] = $catalog_entry->getId();
-            $catalog_data['text_key'] = $translation_key->getText_key();
+            $catalog_data['text_key'] = $translation_key->getTextKey();
             $catalog_data['language'] = $catalog_entry->getLanguage();
             $catalog_data['message'] = $catalog_entry->getMessage();
 

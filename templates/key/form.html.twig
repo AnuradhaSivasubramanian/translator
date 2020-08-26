@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>Edit/Create Form</title>
+	</head>
+	<body>
+		<header>
+			<h1>{{mode == 'new' ? 'Add New Key' : 'Modify Key'}}</h1>
+
+		</header>
+		<main>
+
+			<form action="" method="post">
+
+
+				<dl>
+					<dt>Translation Key</dt>
+					<dd><input type="text" name="form[text_key]" value="{{formdata.text_key is defined ? formdata.text_key : ""}}" class="form-input-name"/></dd>
+				</dl>
+				<input type="submit" value="Submit">
+			</form>
+			<ul>
+
+				<li><a class="a_link"href="{{path("index_keys")}}">Back</a></li>
+			</ul>
+		</main>
+	</body>
+</html>
