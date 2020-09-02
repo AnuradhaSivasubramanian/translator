@@ -30,7 +30,7 @@
 					<tr>
 						<td>{{entry.id}}</td>
 						{% for translation_key in translation_keys %}
-							{% if translation_key.id == entry.translationKeyId %}
+							{% if translation_key.id == entry.translationKey.id %}
 								<td>{{translation_key.textKey}}</td>
 							{% endif %}
 

@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\TranslationKey;
+use App\Entity\TranslationMessage;
+use App\Form\MessageType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class KeyController extends AbstractController
@@ -50,41 +54,42 @@ class KeyController extends AbstractController
 
     /**
      * 
-     *@Route("/keys/modify/{id_key}", name="modify_key")
+     *@Route("/keys/modify/{translation_key}", name="modify_key")
      * 
      */
-    public function modifyEntry(Request $request, $id_key)
+    public function modifyEntry(Request $request, TranslationKey $translation_key)
     {
         $data = [];
 
-        //Find the entry to be modified
-        $key_entry = $this->getDoctrine()
-            ->getRepository('App:TranslationKey')
-            ->find($id_key);
+
 
         $data['mode'] = 'modify';
+        $data['languages'] = ['nl', 'en'];
 
-        $form = $this->createFormBuilder()
-            ->add('textkey')
+        $form = $this->createFormBuilder($translation_key)
+            ->add('text_key')
+            ->add(
+                'translationmessages',
+                CollectionType::class,
+                array(
+                    'entry_type' => MessageType::class,
+                    'allow_add' => true,
+                )
+            )
+            ->add('submit', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
 
-            $form_data = $form->getData();
+
             $entitymanager = $this->getDoctrine()->getManager();
-            $key_entry->setTextKey($form_data['textkey']);
-
-            $entitymanager->persist($key_entry);
+            $entitymanager->persist($translation_key);
             $entitymanager->flush();
-
             return $this->redirectToRoute('index_keys');
         } else {
-
-            $key_data['id'] = $key_entry->getId();
-            $key_data['text_key'] = $key_entry->getTextKey();
-            $data['formdata'] = $key_data;
+            $data['formdata'] = $form->createView();
         }
         return $this->render('key/form.html.twig', $data);
     }
@@ -99,25 +104,54 @@ class KeyController extends AbstractController
         $data['formdata'] = [];
         $data['mode'] = 'new';
 
-        $form = $this->createFormBuilder()
+        $translation_key = new TranslationKey;
+
+        $translation_message_nl = new TranslationMessage;
+        $translation_message_en = new TranslationMessage;
+
+        $translation_message_nl->setLanguage('nl');
+        $translation_message_nl->setMessage("");
+        $translation_message_en->setLanguage('en');
+        $translation_message_en->setMessage("");
+
+        $translation_key->addTranslationMessage($translation_message_nl);
+        $translation_key->addTranslationMessage($translation_message_en);
+
+
+
+        $form = $this->createFormBuilder($translation_key)
             ->add('text_key')
+            ->add(
+                'translationmessages',
+                CollectionType::class,
+                array(
+                    'entry_type' => MessageType::class,
+                    'allow_add' => true,
+                )
+            )
+            ->add('submit', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $form_data = $form->getData();
-            $data['formdata'] = [];
-            $data['formdata'] = $form_data;
-
             $entitymanager = $this->getDoctrine()->getManager();
-            $message = new TranslationKey;
-            $message->setTextKey($form_data['text_key']);
+            $entitymanager->persist($translation_key);
 
-            $entitymanager->persist($message);
+
+            $translation_message_nl->setTranslationKey($translation_key);
+            $translation_message_en->setTranslationKey($translation_key);
+
+            $entitymanager->persist($translation_message_en);
+            $entitymanager->persist($translation_message_nl);
             $entitymanager->flush();
 
             return $this->redirectToRoute('index_keys');
+        } else {
+
+
+
+            $data['formdata'] = $form->createView();
         }
         return $this->render('key/form.html.twig', $data);
     }

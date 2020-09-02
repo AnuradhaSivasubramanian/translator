@@ -34,11 +34,9 @@
 							<a class="action" href="{{path("view_key", {'id_key': entry.id})}}">View</a>
 						</td>
 						<td>
-							<a class="action" href="{{path("modify_key", {'id_key': entry.id})}}">Edit</a>
+							<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}">Edit</a>
 						</td>
-						{# <td>
-																			<a class="action" href="{{path("delete_entry", {'id_catalog': entry.id})}}">Delete</a>
-																		</td> #}
+
 					</tr>
 				{% endfor %}
 

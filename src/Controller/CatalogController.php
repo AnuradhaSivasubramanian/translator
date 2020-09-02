@@ -24,6 +24,11 @@ class CatalogController extends AbstractController
             ->getRepository('App:TranslationMessage')
             ->findAll();
 
+        //loop thru catalog to get the text_key using FK relation
+        foreach ($catalog as $entry) {
+            echo $entry->getTranslationKey()->getTextKey();
+        }
+
         //find all translation keys    
         $translation_keys = $this->getDoctrine()
             ->getRepository('App:TranslationKey')

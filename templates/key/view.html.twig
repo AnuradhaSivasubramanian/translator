@@ -11,11 +11,16 @@
 
 		</header>
 		<main>
-			<h4>ID:
-				{{formdata.id}}
-			</h4>
-			<p>Text:
+
+
+			<h4>Text</h4>
+			<p>
 				{{formdata.textKey}}</p>
+			<h4>Messages</h4>
+			{% for message in formdata.translationMessages %}
+				<p>{{message.language}}
+					{{message.message}}</p>
+			{% endfor %}
 
 			<ul>
 

@@ -33,6 +33,12 @@ class TranslationMessage
      */
     private $message;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=TranslationKey::class, inversedBy="translationMessages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $translation_key;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +76,18 @@ class TranslationMessage
     public function setMessage(string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getTranslationKey(): ?TranslationKey
+    {
+        return $this->translation_key;
+    }
+
+    public function setTranslationKey(?TranslationKey $translation_key): self
+    {
+        $this->translation_key = $translation_key;
 
         return $this;
     }
