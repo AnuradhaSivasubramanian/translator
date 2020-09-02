@@ -24,8 +24,9 @@
 				<div>
 					{% for translationmessage in formdata.translationmessages %}
 
-						{{form_label(translationmessage.message, translationmessage.language.vars.value)}}
-						{{ form_widget(translationmessage.message) }}
+						<p>
+							{{form_label(translationmessage.message, translationmessage.language.vars.value)}}
+							{{ form_widget(translationmessage.message) }}</p>
 
 
 					{% endfor %}

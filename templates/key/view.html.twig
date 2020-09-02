@@ -18,7 +18,8 @@
 				{{formdata.textKey}}</p>
 			<h4>Messages</h4>
 			{% for message in formdata.translationMessages %}
-				<p>{{message.language}}
+				<p>
+					<strong>{{message.language}}</strong>
 					{{message.message}}</p>
 			{% endfor %}
 
