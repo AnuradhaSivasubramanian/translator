@@ -153,38 +153,38 @@ class KeyController extends AbstractController
 
     /**
      *
-     *@Route("/keys/delete/{translation_key}", name="delete_key")
+     *@Route("/keys/delete/{id_key}", name="delete_key")
      *
      */
-    public function deleteKey(Request $request, TranslationKey $translation_key)
+    public function deleteKey(Request $request, int $id_key)
     {
-        $data = [];
-        $form = $this->createFormBuilder($translation_key)
-            ->add('text_key')
-            ->add(
-                'translationmessages',
-                CollectionType::class,
-                array(
-                    'entry_type' => MessageType::class,
-                    'allow_add' => true,
-                )
-            )
-            ->add('delete', SubmitType::class)
-            ->getForm();
+        //Find the selected key
+        $key_entry = $this->getDoctrine()
+            ->getRepository('App:TranslationKey')
+            ->find($id_key);
 
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-
-            $entitymanager = $this->getDoctrine()->getManager();
-            $entitymanager->remove($translation_key);
-            $entitymanager->flush();
-            return $this->redirectToRoute('index_keys');
-
-        } else {
-
-            $data['formdata'] = $form->createView();
-        }
+        $data['formdata'] = $key_entry;
         return $this->render('key/delete.html.twig', $data);
+    }
+
+    /**
+     *
+     *@Route("/keys/delete/confim/{id_key}", name="confirm_delete")
+     *
+     */
+    public function confirmDeleteKey(Request $request, int $id_key)
+    {
+        //Find the selected key
+        $translation_key = $this->getDoctrine()
+            ->getRepository('App:TranslationKey')
+            ->find($id_key);
+
+
+        $entitymanager = $this->getDoctrine()->getManager();
+        $entitymanager->remove($translation_key);
+                $entitymanager->flush();
+
+        return $this->redirectToRoute('index_keys');
     }
 }
