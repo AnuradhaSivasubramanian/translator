@@ -13,7 +13,7 @@
 			</h4>
 		</header>
 		<main>
-			<a class="action" href="{{path("new_key")}}">Create new key</a>
+			<a class="action" href="{{path("new_key")}}">Create a new key</a>
 			<table class="list">
 				<tr>
 					<th>ID</th>
@@ -35,6 +35,9 @@
 						</td>
 						<td>
 							<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}">Edit</a>
+						</td>
+						<td>
+							<a class="action" href="{{path("delete_key", {'translation_key': entry.id})}}">Delete</a>
 						</td>
 
 					</tr>

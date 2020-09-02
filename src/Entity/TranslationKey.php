@@ -25,7 +25,7 @@ class TranslationKey
     private $text_key;
 
     /**
-     * @ORM\OneToMany(targetEntity=TranslationMessage::class, mappedBy="translation_key")
+     * @ORM\OneToMany(targetEntity=TranslationMessage::class, mappedBy="translation_key", orphanRemoval=true)
      */
     private $translationMessages;
 

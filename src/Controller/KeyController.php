@@ -38,7 +38,7 @@ class KeyController extends AbstractController
      *@Route("/keys/view/{id_key}", name="view_key")
      * 
      */
-    public function showDetails(Request $request, $id_key)
+    public function showDetails(int $id_key)
     {
 
 
@@ -137,11 +137,6 @@ class KeyController extends AbstractController
         if ($form->isSubmitted()) {
             $entitymanager = $this->getDoctrine()->getManager();
             $entitymanager->persist($translation_key);
-
-
-            $translation_message_nl->setTranslationKey($translation_key);
-            $translation_message_en->setTranslationKey($translation_key);
-
             $entitymanager->persist($translation_message_en);
             $entitymanager->persist($translation_message_nl);
             $entitymanager->flush();
@@ -154,5 +149,42 @@ class KeyController extends AbstractController
             $data['formdata'] = $form->createView();
         }
         return $this->render('key/form.html.twig', $data);
+    }
+
+    /**
+     *
+     *@Route("/keys/delete/{translation_key}", name="delete_key")
+     *
+     */
+    public function deleteKey(Request $request, TranslationKey $translation_key)
+    {
+        $data = [];
+        $form = $this->createFormBuilder($translation_key)
+            ->add('text_key')
+            ->add(
+                'translationmessages',
+                CollectionType::class,
+                array(
+                    'entry_type' => MessageType::class,
+                    'allow_add' => true,
+                )
+            )
+            ->add('delete', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            $entitymanager = $this->getDoctrine()->getManager();
+            $entitymanager->remove($translation_key);
+            $entitymanager->flush();
+            return $this->redirectToRoute('index_keys');
+
+        } else {
+
+            $data['formdata'] = $form->createView();
+        }
+        return $this->render('key/delete.html.twig', $data);
     }
 }
