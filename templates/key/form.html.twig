@@ -11,9 +11,10 @@
 				{{ form_errors(formdata) }}
 			</div>
 
-			<div>
+			<div class="form_container">
 				<div>
-					{{ form_row(formdata.text_key) }}
+					{{ form_label(formdata.text_key, 'Translation Key') }}
+					{{ form_widget(formdata.text_key) }}
 				</div>
 
 				<div>

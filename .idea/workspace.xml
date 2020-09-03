@@ -22,8 +22,7 @@
     <list default="true" id="162f1e85-9bfb-4461-b7e1-5eec36a177a8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/KeyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/KeyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/key/delete.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/delete.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/key/form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/form.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/key/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/index.html.twig" afterDir="false" />
@@ -175,7 +174,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599052560850</updated>
-      <workItem from="1599052568497" duration="36935000" />
+      <workItem from="1599052568497" duration="39435000" />
     </task>
     <servers />
   </component>

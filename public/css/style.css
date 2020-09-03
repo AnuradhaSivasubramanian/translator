@@ -209,3 +209,16 @@ dd {
   margin-bottom: 0;
   padding-left: 1em;
 }
+
+.display_none {
+  display: none;
+}
+
+.color_blue{
+  color: #0055dd;
+}
+
+.form_container{
+  display: flex;
+  flex-direction: column;
+}
