@@ -1,4 +1,4 @@
-{% extends "./base.html.twig" %}
+{% extends "./index.html.twig" %}
 {% block title %}Translator{% endblock title %}
 {% block content %}
 		<header>
@@ -26,13 +26,13 @@
 
 						<td>{{entry.textKey}}</td>
 						<td>
-							<a class="action" href="{{path("view_key", {'id_key': entry.id})}}"><button>View</button></a>
+							<a class="action" href="{{path("view_key", {'id_key': entry.id})}}"><button class="button-secondary">View</button></a>
 						</td>
 						<td>
-							<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}"><button>Edit</button></a>
+							<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}"><button class="button-secondary"> Edit</button></a>
 						</td>
 						<td>
-							<a class="action" href="{{path("delete_key", {'id_key': entry.id})}}"><button>Delete</button></a>
+							<a class="action" href="{{path("delete_key", {'translation_key': entry.id})}}"><button class="button-secondary">Delete</button></a>
 						</td>
 
 					</tr>
