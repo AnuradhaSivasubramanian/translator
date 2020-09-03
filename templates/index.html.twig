@@ -24,31 +24,49 @@
 				<div class="search_result">
 					{% if search == true %}
 					{% if result_keys is not empty %}
+						<h2>List of Keys found</h2>
 						{% for key in result_keys %}
+					<table class="list">
+						<tr>
+							<th>Text</th>
+							<th>NL</th>
+							<th>EN</th>
 
-						<h4>Text</h4>
-						<p>
-							{{key.textKey}}</p>
-						<h4>Messages</h4>
-						{% for message in key.translationMessages %}
-							<p>
-								<strong>{{message.language}}</strong>
-								{{message.message}}</p>
-						{% endfor %}
+						</tr>
+						<tr>
+							<td>{{key.textKey}}</td>
+							{% for message in key.translationMessages %}
+
+								<td>{{message.message}}</td>
+							{% endfor %}
+
+
+						</tr>
+
+					</table>
 						{% endfor %}
 					{% endif %}
 					{% if result_keys is empty and result_messages is empty %}
 						<p>No Entry Found!!</p>
 					{% endif %}
 					{% if result_messages is not empty %}
+						<h2>List of Messages found</h2>
+					<table class="list">
+						<tr>
+							<th>Text</th>
+							<th>NL</th>
+							<th>EN</th>
+
+						</tr>
 						{% for message in result_messages %}
-						<h4>Key</h4>
-						<p>{{ message.translationKey.textKey }}</p>
-						<h5>Language</h5>
-						<p>{{ message.language }}</p>
-						<h5>Message</h5>
-						<p>{{ message.message }}</p>
+						<tr>
+							<td>{{ message.translationKey.textKey }}</td>
+							<td>{{ message.language }}</td>
+							<td>{{ message.message }}</td>
+						</tr>
+
 						{% endfor %}
+					</table>
 					{% endif %}
 			{% endif %}
 				</div>
