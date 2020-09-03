@@ -29,21 +29,34 @@ class TranslationKey
      */
     private $translationMessages;
 
+    /**
+     * TranslationKey constructor.
+     */
     public function __construct()
     {
         $this->translationMessages = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTextKey(): ?string
     {
         return $this->text_key;
     }
 
+    /**
+     * @param string $text_key
+     * @return $this
+     */
     public function setTextKey(string $text_key): self
     {
         $this->text_key = $text_key;
@@ -59,6 +72,10 @@ class TranslationKey
         return $this->translationMessages;
     }
 
+    /**
+     * @param TranslationMessage $translationMessage
+     * @return $this
+     */
     public function addTranslationMessage(TranslationMessage $translationMessage): self
     {
         if (!$this->translationMessages->contains($translationMessage)) {
@@ -69,6 +86,10 @@ class TranslationKey
         return $this;
     }
 
+    /**
+     * @param TranslationMessage $translationMessage
+     * @return $this
+     */
     public function removeTranslationMessage(TranslationMessage $translationMessage): self
     {
         if ($this->translationMessages->contains($translationMessage)) {

@@ -1,23 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+{% extends "base.html.twig" %}
+{% block title %}Translator{% endblock title %}
+{% block content %}
 
-		<title>Translator</title>
-	</head>
-	<body>
 		<header>
-			<h1>Translater Data Page</h1>
+			<h1>Translator</h1>
 			<p>
-				This is the Traslator data main page
+				Search or View the list of Keys and its messages
 			</p>
 		</header>
-		<main>
 
-			<ul>
-				<li><a class="a_link"href="{{path("index_keys")}}">Keys</a></li>
-			</ul>
+		<main>
+				<div class="search-form">
+					{{ form_start(formdata) }}
+					<div>
+						{{ form_errors(formdata) }}
+					</div>
+					<p>{{ form_row(formdata.search_value) }}</p>
+					<p>
+					{{ form_row(formdata.submit) }}</p>
+					{{ form_end(formdata) }}
+				</div>
+			<a class="a_link"href="{{path("index_keys")}}"><button>All Keys</button></a>
+				<div class="search_result">
+					{% if search == true %}
+					{% if result_keys is not empty %}
+						{% for key in result_keys %}
+
+						<h4>Text</h4>
+						<p>
+							{{key.textKey}}</p>
+						<h4>Messages</h4>
+						{% for message in key.translationMessages %}
+							<p>
+								<strong>{{message.language}}</strong>
+								{{message.message}}</p>
+						{% endfor %}
+						{% endfor %}
+					{% endif %}
+					{% if result_keys is empty and result_messages is empty %}
+						<p>No Entry Found!!</p>
+					{% endif %}
+					{% if result_messages is not empty %}
+						{% for message in result_messages %}
+						<h4>Key</h4>
+						<p>{{ message.translationKey.textKey }}</p>
+						<h5>Language</h5>
+						<p>{{ message.language }}</p>
+						<h5>Message</h5>
+						<p>{{ message.message }}</p>
+						{% endfor %}
+					{% endif %}
+			{% endif %}
+				</div>
+
+
 		</main>
-	</body>
-</html>
+{% endblock content %}
+

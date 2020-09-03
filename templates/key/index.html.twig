@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>Translator Key</title>
-	</head>
-	<body>
+{% extends "./base.html.twig" %}
+{% block title %}Translator{% endblock title %}
+{% block content %}
 		<header>
 			<h1>Keys</h1>
 			<h4>
@@ -31,13 +26,13 @@
 
 						<td>{{entry.textKey}}</td>
 						<td>
-							<a class="action" href="{{path("view_key", {'id_key': entry.id})}}">View</a>
+							<a class="action" href="{{path("view_key", {'id_key': entry.id})}}"><button>View</button></a>
 						</td>
 						<td>
-							<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}">Edit</a>
+							<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}"><button>Edit</button></a>
 						</td>
 						<td>
-							<a class="action" href="{{path("delete_key", {'id_key': entry.id})}}">Delete</a>
+							<a class="action" href="{{path("delete_key", {'id_key': entry.id})}}"><button>Delete</button></a>
 						</td>
 
 					</tr>
@@ -45,10 +40,9 @@
 
 
 			</table>
-			<ul>
-				<li><a class="a_link"href="{{path("home")}}">Back</a></li>
 
-			</ul>
+				<a class="a_link"href="{{path("home")}}"><button>Back</button></a>
+
+
 		</main>
-	</body>
-</html>
+{%  endblock content %}

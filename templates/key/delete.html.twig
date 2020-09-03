@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Translator Key</title>
-</head>
-<body>
+{% extends "index.html.twig" %}
+{% block title %}Delete{% endblock title %}
+{% block content %}
 <header>
     <h1>Confirm Delete Key</h1>
 
@@ -22,11 +17,10 @@
             <strong>{{message.language}}</strong>
             {{message.message}}</p>
     {% endfor %}
-    <a class="a_link" href="{{path("confirm_delete", {'id_key': formdata.id})}}">Delete Key</a>
+    <a class="a_link" href="{{path("confirm_delete", {'id_key': formdata.id})}}"><button>Delete Key</button></a>
     <ul>
 
         <li><a class="a_link"href="{{path("index_keys")}}">Back</a></li>
     </ul>
 </main>
-</body>
-</html>
+{% endblock content %}

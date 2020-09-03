@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>Translator Key</title>
-	</head>
-	<body>
+{% extends "key/index.html.twig" %}
+{% block title %}View details{% endblock title %}
+{% block content %}
 		<header>
 			<h1>View Key Details</h1>
 
@@ -23,10 +18,9 @@
 					{{message.message}}</p>
 			{% endfor %}
 
-			<ul>
 
-				<li><a class="a_link"href="{{path("index_keys")}}">Back</a></li>
-			</ul>
+
+				<a class="a_link"href="{{path("index_keys")}}"><button>Back</button></a>
+
 		</main>
-	</body>
-</html>
+		{% endblock content %}

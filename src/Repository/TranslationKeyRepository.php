@@ -20,6 +20,25 @@ class TranslationKeyRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @param string $value
+     * @return array|null
+     */
+    public function findKeyByTextKey(string $value): ?array
+    {
+
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery('SELECT k FROM App\Entity\TranslationKey k
+        WHERE k.text_key LIKE :value
+        ')
+            ->setParameter('value', '%'.$value.'%')
+            ->execute();
+    }
+
+
+
+
 
     // /**
     //  * @return TranslationKey[] Returns an array of TranslationKey objects

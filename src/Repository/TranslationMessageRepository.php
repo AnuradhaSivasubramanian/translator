@@ -20,7 +20,23 @@ class TranslationMessageRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @param string $value
+     * @return array|null
+     */
+    public function findMessageByText(string $value): ?array
+    {
 
+
+
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery('SELECT m FROM App\Entity\TranslationMessage m
+        WHERE m.message LIKE :value
+        ')
+            ->setParameter('value', '%'.$value.'%')
+            ->execute();
+    }
     // /**
     //  * @return TranslationMessage[] Returns an array of TranslationMessage objects
     //  */
