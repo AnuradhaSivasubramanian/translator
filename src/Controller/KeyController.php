@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Domain;
 use App\Entity\TranslationKey;
 use App\Entity\TranslationMessage;
+use App\Form\DomainsType;
 use App\Form\MessageType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,6 +49,11 @@ class KeyController extends AbstractController
     {
         $data = [];
         $data['mode'] = 'modify';
+        $domains = $this->getDoctrine()
+            ->getRepository('App:Domain')
+            ->findAll();
+
+        $data['domains'] = $domains;
         $form = $this->createFormBuilder($translation_key)
             ->add('text_key')
             ->add(
@@ -56,14 +64,21 @@ class KeyController extends AbstractController
                     'allow_add' => true,
                 )
             )
-            ->add('submit', SubmitType::class)
+            ->add(
+                'domains',
+                EntityType::class,
+                array(
+                    'class' => Domain::class,
+                   )
+            )
+            ->add('submit',
+                SubmitType::class
+            )
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-
-
             $entitymanager = $this->getDoctrine()->getManager();
             $entitymanager->persist($translation_key);
             $entitymanager->flush();
@@ -71,6 +86,7 @@ class KeyController extends AbstractController
         } else {
             $data['formdata'] = $form->createView();
         }
+
         return $this->render('key/form.html.twig', $data);
     }
 

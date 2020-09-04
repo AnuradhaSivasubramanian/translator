@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+{% block title %}Domains{% endblock title %}
+{% block content %}
+    <header>
+        <h1>Domains</h1>
+
+    </header>
+    <main>
+
+        <div class="domain_table">
+
+                <table class="list">
+                    <tr>
+                        <th>ID</th>
+                        <th>Domain Name</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+
+                    </tr>
+
+                    {%  for entry in domains %}
+                        <tr>
+                            <td>{{entry.id}}</td>
+
+
+                            <td>{{entry.domainName}}</td>
+
+                            <td>
+                                <a class="action" href="{{path("view_domain", {'id_domain': entry.id})}}"><button class="button-secondary">View</button></a>
+                            </td>
+                            <td>
+                                <a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}"><button class="button-secondary"> Edit</button></a>
+                            </td>
+                            <td>
+                                <a class="action" href="{{path("delete_key", {'translation_key': entry.id})}}"><button class="button-secondary">Delete</button></a>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+
+                </table>
+
+        </div>
+
+
+        <a class="a_link"href="{{path("index_keys")}}"><button class="button-secondary">Back</button></a>
+
+
+
+    </main>
+{% endblock %}

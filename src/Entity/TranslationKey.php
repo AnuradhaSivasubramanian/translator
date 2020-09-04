@@ -30,11 +30,17 @@ class TranslationKey
     private $translationMessages;
 
     /**
+     * @ORM\ManyToMany(targetEntity=Domain::class, mappedBy="translation_keys")
+     */
+    private $domains;
+
+    /**
      * TranslationKey constructor.
      */
     public function __construct()
     {
         $this->translationMessages = new ArrayCollection();
+        $this->domains = new ArrayCollection();
     }
 
     /**
@@ -98,6 +104,34 @@ class TranslationKey
             if ($translationMessage->getTranslationKey() === $this) {
                 $translationMessage->setTranslationKey(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Domain[]
+     */
+    public function getDomains(): Collection
+    {
+        return $this->domains;
+    }
+
+    public function addDomain(Domain $domain): self
+    {
+        if (!$this->domains->contains($domain)) {
+            $this->domains[] = $domain;
+            $domain->addTranslationKey($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomain(Domain $domain): self
+    {
+        if ($this->domains->contains($domain)) {
+            $this->domains->removeElement($domain);
+            $domain->removeTranslationKey($this);
         }
 
         return $this;

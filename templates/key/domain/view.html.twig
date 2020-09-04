@@ -1,0 +1,21 @@
+{% extends "key/domain/index.html.twig" %}
+{% block title %}View details{% endblock title %}
+{% block content %}
+    <header>
+        <h1>View Domain Details</h1>
+
+    </header>
+    <main>
+
+
+        <h4>Name: </h4>
+        <p>
+            {{formdata.domainName}}</p>
+
+
+
+
+        <a class="a_link"href="{{path("index_domains")}}"><button>Back</button></a>
+
+    </main>
+{% endblock content %}
