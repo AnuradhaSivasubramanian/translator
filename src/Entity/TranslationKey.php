@@ -29,10 +29,13 @@ class TranslationKey
      */
     private $translationMessages;
 
+
     /**
-     * @ORM\ManyToMany(targetEntity=Domain::class, mappedBy="translation_keys")
+     * @ORM\ManyToMany(targetEntity=Domain::class)
+     * @ORM\JoinTable(name="domain_translation_key", joinColumns={@ORM\JoinColumn(name="domain_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="translation_key_id", referencedColumnName="id")})
      */
-    private $domains;
+     private $domains;
 
     /**
      * TranslationKey constructor.

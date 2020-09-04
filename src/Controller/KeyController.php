@@ -67,9 +67,16 @@ class KeyController extends AbstractController
             ->add(
                 'domains',
                 EntityType::class,
-                array(
-                    'class' => Domain::class,
-                   )
+                ['class' => Domain::class,
+                    'label' => 'domain_name',
+                    'choice_label' => function ($item) {
+                        return $item->getDomainName();
+                    },
+                    'mapped'=>true,
+                    'expanded' => true,
+                    'multiple'=>true,
+                    'allow_extra_fields'=>true]
+
             )
             ->add('submit',
                 SubmitType::class

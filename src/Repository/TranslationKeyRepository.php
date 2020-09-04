@@ -34,6 +34,20 @@ class TranslationKeyRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+    /**
+     * @param string $value
+     * @return array|null
+     */
+    public function findDomain(string $value): ?array
+    {
+
+        return $this->createQueryBuilder('k')
+            ->join('k.domains', 'domains')
+            ->where('domains.domain_name = :value ')
+            ->setParameter('value',$value )
+            ->getQuery()->getResult();
+    }
+
 
 
 

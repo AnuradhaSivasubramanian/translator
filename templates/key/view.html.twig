@@ -17,6 +17,12 @@
 					<strong>{{message.language}}</strong>
 					{{message.message}}</p>
 			{% endfor %}
+			<h4>Domains</h4>
+			{% for domain in formdata.domains %}
+				<p>
+					<strong>{{domain.domainName}}</strong>
+
+			{% endfor %}
 
 
 

@@ -24,15 +24,7 @@ class Domain
      */
     private $domain_name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=TranslationKey::class, inversedBy="domains")
-     */
-    private $translation_keys;
 
-    public function __construct()
-    {
-        $this->translation_keys = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -51,29 +43,6 @@ class Domain
         return $this;
     }
 
-    /**
-     * @return Collection|TranslationKey[]
-     */
-    public function getTranslationKeys(): Collection
-    {
-        return $this->translation_keys;
-    }
 
-    public function addTranslationKey(TranslationKey $translationKey): self
-    {
-        if (!$this->translation_keys->contains($translationKey)) {
-            $this->translation_keys[] = $translationKey;
-        }
 
-        return $this;
-    }
-
-    public function removeTranslationKey(TranslationKey $translationKey): self
-    {
-        if ($this->translation_keys->contains($translationKey)) {
-            $this->translation_keys->removeElement($translationKey);
-        }
-
-        return $this;
-    }
 }

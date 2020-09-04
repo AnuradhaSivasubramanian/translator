@@ -6,7 +6,7 @@
 
     </header>
     <main>
-
+        <a class="action" href="{{path("new_domain")}}">Create a new Domain</a>
         <div class="domain_table">
 
                 <table class="list">
@@ -30,10 +30,10 @@
                                 <a class="action" href="{{path("view_domain", {'id_domain': entry.id})}}"><button class="button-secondary">View</button></a>
                             </td>
                             <td>
-                                <a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}"><button class="button-secondary"> Edit</button></a>
+                                <a class="action" href="{{path("edit_domain", {'domain': entry.id})}}"><button class="button-secondary"> Edit</button></a>
                             </td>
                             <td>
-                                <a class="action" href="{{path("delete_key", {'translation_key': entry.id})}}"><button class="button-secondary">Delete</button></a>
+                                <a class="action" href="{{path("delete_domain", {'domain': entry.id})}}"><button class="button-secondary">Delete</button></a>
                             </td>
 
                         </tr>

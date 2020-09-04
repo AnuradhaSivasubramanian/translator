@@ -1,0 +1,37 @@
+{% extends "key/domain/index.html.twig" %}
+{% block title %}Delete{% endblock title %}
+{% block content %}
+    <header>
+        <h1 class="delete">Confirm Delete Domain</h1>
+
+    </header>
+    <main>
+        {% if keys_found is not empty %}
+            <h4> Domain <span class="color_blue">{{ formdata.domain_name.vars.value }} </span> has {{ keys_found|length }}{{ keys_found|length == 1 ?  ' Key' :   ' Keys'}} associated. It cannot be deleted! </h4>
+        {% endif %}
+        {% if keys_found is  empty %}
+        {{ form_start(formdata) }}
+        <div>
+            {{ form_errors(formdata) }}
+        </div>
+
+        <div>
+            <div>
+                <h4> <span class="color_blue">{{ formdata.domain_name.vars.value }} </span> has no Keys associated, do you want to delete it?</h4>
+            </div>
+            <div>
+                {{ form_row(formdata.submit) }}
+            </div>
+            <div class="display_none">
+               {{ form_row(formdata.domain_name) }}
+            </div>
+
+        </div>
+        {{ form_end(formdata) }}
+        {% endif %}
+        <ul>
+
+            <li><a class="a_link"href="{{path("index_domains")}}">Back</a></li>
+        </ul>
+    </main>
+{% endblock content %}
