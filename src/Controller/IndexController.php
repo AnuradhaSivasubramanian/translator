@@ -14,7 +14,7 @@ class IndexController extends AbstractController
 {
 
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="index_keys")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -22,10 +22,17 @@ class IndexController extends AbstractController
     {
         $data = [];
         $data['search'] = false;
+
+        //find all translation keys
+        $translation_keys = $this->getDoctrine()
+            ->getRepository('App:TranslationKey')
+            ->findAll();
+        $data['translation_keys'] = $translation_keys;
         $form = $this->createFormBuilder()
             ->add('search_value')
             ->add('submit', SubmitType::class)
             ->getForm();
+
 
         $form->handleRequest($request);
 
@@ -36,19 +43,15 @@ class IndexController extends AbstractController
                 ->getRepository(TranslationKey::class)
                 ->findKeyByTextKey($searchdata['search_value']);
 
-            $result_messages = $this->getDoctrine()
-                ->getRepository(TranslationMessage::class)
-                ->findMessageByText($searchdata['search_value']);
-
             $data['formdata'] = $form->createView();
             $data['result_keys'] = $result_keys;
-            $data['result_messages'] = $result_messages;
-
-            return $this->render('index.html.twig', $data);
+            $data['translation_keys'] = $result_keys;
+            return $this->render('key/index.html.twig', $data);
         }
         else {
             $data['formdata'] = $form->createView();
         }
-        return $this->render('index.html.twig', $data);
+
+        return $this->render('key/index.html.twig',  $data);
     }
 }

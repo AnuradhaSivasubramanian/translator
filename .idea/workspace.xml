@@ -20,14 +20,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="162f1e85-9bfb-4461-b7e1-5eec36a177a8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/IndexController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/KeyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/KeyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/TranslationKeyRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TranslationKeyRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/TranslationMessageRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TranslationMessageRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/key/delete.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/delete.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/key/form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/key/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -169,7 +177,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1599052560850</updated>
-      <workItem from="1599052568497" duration="39785000" />
+      <workItem from="1599052568497" duration="39912000" />
+      <workItem from="1599202732205" duration="5318000" />
     </task>
     <servers />
   </component>
@@ -186,6 +195,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599115550333">
@@ -196,5 +206,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1599106916474" />
+    <state x="-1297" y="225" key="search.everywhere.popup" timestamp="1599207008566">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1297" y="225" key="search.everywhere.popup/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1599207008566" />
   </component>
 </project>

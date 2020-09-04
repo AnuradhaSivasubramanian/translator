@@ -4,44 +4,67 @@
 		<header>
 			<h1>Keys</h1>
 			<h4>
-				User can view, add, update or delete a key in the Translator Keys
+				User can view, add, update, search or delete a key in the Translator Keys
 			</h4>
 		</header>
 		<main>
 			<a class="action" href="{{path("new_key")}}">Create a new key</a>
-			<table class="list">
-				<tr>
-					<th>ID</th>
-					<th>Text</th>
+			<div class="search-form">
+				{{ form_start(formdata) }}
+				<div>
+					{{ form_errors(formdata) }}
+				</div>
+				<p>{{ form_row(formdata.search_value) }}</p>
+				<p>
+					{{ form_row(formdata.submit) }}</p>
+				{{ form_end(formdata) }}
+			</div>
+			<div class="keys_table">
+				{% if translation_keys is not empty %}
+					<table class="list">
+						<tr>
+							<th>ID</th>
+							<th>Text</th>
+							<th>NL</th>
+							<th>EN</th>
+							<th>&nbsp;</th>
+							<th>&nbsp;</th>
+							<th>&nbsp;</th>
 
-					<th>&nbsp;</th>
-					<th>&nbsp;</th>
-					<th>&nbsp;</th>
+						</tr>
 
-				</tr>
-				{%  for entry in translation_keys %}
-					<tr>
-						<td>{{entry.id}}</td>
+						{%  for entry in translation_keys %}
+							<tr>
+								<td>{{entry.id}}</td>
 
 
-						<td>{{entry.textKey}}</td>
-						<td>
-							<a class="action" href="{{path("view_key", {'id_key': entry.id})}}"><button class="button-secondary">View</button></a>
-						</td>
-						<td>
-							<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}"><button class="button-secondary"> Edit</button></a>
-						</td>
-						<td>
-							<a class="action" href="{{path("delete_key", {'translation_key': entry.id})}}"><button class="button-secondary">Delete</button></a>
-						</td>
+								<td>{{entry.textKey}}</td>
+								{% for message in entry.translationMessages %}
 
-					</tr>
-				{% endfor %}
+									<td>{{message.message}}</td>
+								{% endfor %}
+								<td>
+									<a class="action" href="{{path("view_key", {'id_key': entry.id})}}"><button class="button-secondary">View</button></a>
+								</td>
+								<td>
+									<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}"><button class="button-secondary"> Edit</button></a>
+								</td>
+								<td>
+									<a class="action" href="{{path("delete_key", {'translation_key': entry.id})}}"><button class="button-secondary">Delete</button></a>
+								</td>
 
+							</tr>
+						{% endfor %}
 
-			</table>
+					</table>
+				{% endif %}
+			</div>
 
-				<a class="a_link"href="{{path("home")}}"><button class="button-secondary">Back</button></a>
+			{% if translation_keys is empty %}
+				<p>No Entry Found!!</p>
+			{% endif %}
+				<a class="a_link"href="{{path("index_keys")}}"><button class="button-secondary">Back</button></a>
+
 
 
 		</main>

@@ -17,23 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class KeyController extends AbstractController
 {
 
-    /**  
-     *
-     * @Route("/keys", name="index_keys")
-     */
-    public function showKeys()
-    {
-        $data = [];
-
-        //find all translation keys    
-        $translation_keys = $this->getDoctrine()
-            ->getRepository('App:TranslationKey')
-            ->findAll();
-        $data['translation_keys'] = $translation_keys;
-
-        return $this->render('key/index.html.twig',  $data);
-    }
-
     /**
      *
      * @Route("/keys/view/{id_key}", name="view_key")
