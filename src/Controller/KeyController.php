@@ -8,6 +8,7 @@ use App\Entity\TranslationMessage;
 use App\Form\MessageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,10 +54,9 @@ class KeyController extends AbstractController
             ->add(
                 'translationmessages',
                 CollectionType::class,
-                array(
-                    'entry_type' => MessageType::class,
-                    'allow_add' => true,
-                )
+                ['entry_type' => MessageType::class,
+                  'allow_add' => true,
+                   ]
             )
             ->add(
                 'domains',
@@ -118,10 +118,24 @@ class KeyController extends AbstractController
             ->add(
                 'translationmessages',
                 CollectionType::class,
-                array(
+                [
                     'entry_type' => MessageType::class,
                     'allow_add' => true,
-                )
+                    ]
+            )
+            ->add(
+                'domains',
+                EntityType::class,
+                ['class' => Domain::class,
+                    'label' => 'domain_name',
+                    'choice_label' => function ($item) {
+                        return $item->getDomainName();
+                    },
+                    'mapped'=>true,
+                    'expanded' => true,
+                    'multiple'=>true,
+                    'allow_extra_fields'=>true]
+
             )
             ->add('submit', SubmitType::class)
             ->getForm();
@@ -177,6 +191,56 @@ class KeyController extends AbstractController
         }
         return $this->render('key/delete.html.twig', $data);
     }
+
+    /**
+     *
+     * @Route("/keys/uploadcsv", name="upload_csv")
+     * @param Request $request
+     * @param TranslationKey $translation_key
+     * @return Response
+     */
+    public function uploadCsv(Request $request)
+    {
+        $form = $this->createFormBuilder()
+            ->add('nl_file', FileType::class,
+                ['required' => false])
+            ->add('en_file', FileType::class,
+                ['required' => false])
+            ->add('submit', SubmitType::class)
+            ->getForm();
+        $form->handleRequest($request);
+//        $row = 1;
+//        ini_set('auto_detect_line_endings',TRUE);
+//        if (($handle = fopen($this->getParameter('kernel.project_dir').'/public/uploads/' . "test.csv", "r")) !== FALSE) {
+//            while (($data = fgetcsv($handle)) !== FALSE) {
+//                $row++;
+//                echo $data[0] . "<br /><br /><br />\n";
+//            }
+//            ini_set('auto_detect_line_endings',FALSE);
+//            fclose($handle);
+//        }
+
+
+        if ($form->isSubmitted()) {
+            $fileNL = $form['nl_file']->getData();
+            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+            $originalFilenameNL = pathinfo($fileNL->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilenameNL = $originalFilenameNL.'-'.uniqid().'.'.$fileNL->getClientOriginalExtension();
+            $fileNL->move($destination, $newFilenameNL);
+
+            $fileEN = $form['en_file']->getData();
+            $originalFilenameEN = pathinfo($fileEN->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilenameEN = $originalFilenameEN.'-'.uniqid().'.'.$fileEN->getClientOriginalExtension();
+            $fileEN->move($destination, $newFilenameEN);
+
+            return $this->redirectToRoute('index_keys');
+        } else {
+            $data['formdata'] = $form->createView();
+        }
+        return $this->render('key/upload.html.twig', $data);
+    }
+
+
 
 
 }

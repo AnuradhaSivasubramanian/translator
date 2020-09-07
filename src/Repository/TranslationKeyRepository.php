@@ -24,7 +24,7 @@ class TranslationKeyRepository extends ServiceEntityRepository
      * @param string $value
      * @return array|null
      */
-    public function findKeyByTextKey(string $value): ?array
+    public function findKeysByValue(string $value): ?array
     {
 
         return $this->createQueryBuilder('k')
@@ -63,6 +63,35 @@ class TranslationKeyRepository extends ServiceEntityRepository
             ->setParameter('domain', $domain)
             ->getQuery()->getResult();
     }
+
+    /**
+     * @param string $domain
+     * @return array|null
+     */
+    public function FindKeysInADomainWithEmptyMessages(string $domain): ?array
+    {
+        return $this->createQueryBuilder('k')
+            ->leftJoin('k.translationMessages', 'messages')
+            ->join('k.domains', 'domains')
+            ->where(' messages.message = :value and domains.domain_name = :domain ')
+            ->setParameter('value',  '')
+            ->setParameter('domain', $domain)
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @return array|null
+     */
+    public function FindKeysWithEmptyMessages(): ?array
+    {
+        return $this->createQueryBuilder('k')
+            ->leftJoin('k.translationMessages', 'messages')
+            ->where(' messages.message = :value ')
+            ->setParameter('value',  '')
+            ->getQuery()->getResult();
+    }
+
+
 
 
 

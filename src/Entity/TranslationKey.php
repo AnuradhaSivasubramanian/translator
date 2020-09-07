@@ -6,9 +6,11 @@ use App\Repository\TranslationKeyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=TranslationKeyRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class TranslationKey
 {
@@ -36,6 +38,13 @@ class TranslationKey
      *     inverseJoinColumns={@ORM\JoinColumn(name="translation_key_id", referencedColumnName="id")})
      */
      private $domains;
+
+    /**
+     * @var datetime $updated
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    private $updated;
 
     /**
      * TranslationKey constructor.
@@ -138,5 +147,19 @@ class TranslationKey
         }
 
         return $this;
+    }
+
+    /**
+     * Gets triggered every time on update
+
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updated = new \DateTime("now");
+    }
+
+    public function getUpdated(){
+        return $this->updated;
     }
 }
