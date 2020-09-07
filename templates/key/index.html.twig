@@ -15,6 +15,7 @@
 					{{ form_errors(formdata) }}
 				</div>
 				<p>{{ form_row(formdata.search_value) }}</p>
+				<p>{{ form_row(formdata.filter_domain) }}</p>
 				<p>
 					{{ form_row(formdata.submit) }}</p>
 				{{ form_end(formdata) }}
@@ -30,17 +31,12 @@
 							<th>&nbsp;</th>
 							<th>&nbsp;</th>
 							<th>&nbsp;</th>
-
 						</tr>
-
 						{%  for entry in translation_keys %}
 							<tr>
 								<td>{{entry.id}}</td>
-
-
 								<td>{{entry.textKey}}</td>
 								{% for message in entry.translationMessages %}
-
 									<td>{{message.message}}</td>
 								{% endfor %}
 								<td>
@@ -52,20 +48,14 @@
 								<td>
 									<a class="action" href="{{path("delete_key", {'translation_key': entry.id})}}"><button class="button-secondary">Delete</button></a>
 								</td>
-
 							</tr>
 						{% endfor %}
-
 					</table>
 				{% endif %}
 			</div>
-
 			{% if translation_keys is empty %}
 				<p>No Entry Found!!</p>
 			{% endif %}
 				<a class="a_link"href="{{path("index_domains")}}"><button class="button-secondary">Domains</button></a>
-
-
-
 		</main>
 {%  endblock content %}

@@ -3,7 +3,6 @@
 {% block content %}
     <header>
         <h1 class="delete">Confirm Delete Domain</h1>
-
     </header>
     <main>
         {% if keys_found is not empty %}
@@ -14,7 +13,6 @@
         <div>
             {{ form_errors(formdata) }}
         </div>
-
         <div>
             <div>
                 <h4> <span class="color_blue">{{ formdata.domain_name.vars.value }} </span> has no Keys associated, do you want to delete it?</h4>
@@ -25,12 +23,10 @@
             <div class="display_none">
                {{ form_row(formdata.domain_name) }}
             </div>
-
         </div>
         {{ form_end(formdata) }}
         {% endif %}
         <ul>
-
             <li><a class="a_link"href="{{path("index_domains")}}">Back</a></li>
         </ul>
     </main>

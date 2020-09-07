@@ -3,12 +3,10 @@
 {% block content %}
     <header>
         <h1>Domains</h1>
-
     </header>
     <main>
         <a class="action" href="{{path("new_domain")}}">Create a new Domain</a>
         <div class="domain_table">
-
                 <table class="list">
                     <tr>
                         <th>ID</th>
@@ -16,16 +14,11 @@
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
-
                     </tr>
-
                     {%  for entry in domains %}
                         <tr>
                             <td>{{entry.id}}</td>
-
-
                             <td>{{entry.domainName}}</td>
-
                             <td>
                                 <a class="action" href="{{path("view_domain", {'id_domain': entry.id})}}"><button class="button-secondary">View</button></a>
                             </td>
@@ -35,18 +28,10 @@
                             <td>
                                 <a class="action" href="{{path("delete_domain", {'domain': entry.id})}}"><button class="button-secondary">Delete</button></a>
                             </td>
-
                         </tr>
                     {% endfor %}
-
                 </table>
-
         </div>
-
-
         <a class="a_link"href="{{path("index_keys")}}"><button class="button-secondary">Back</button></a>
-
-
-
     </main>
 {% endblock %}

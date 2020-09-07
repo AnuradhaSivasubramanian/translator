@@ -48,6 +48,22 @@ class TranslationKeyRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+    /**
+     * @param string $value
+     * @param string $domain
+     * @return int|mixed|string
+     */
+    public function FindKeyByValueInADomain(string $value, string $domain): ?array
+    {
+        return $this->createQueryBuilder('k')
+            ->leftJoin('k.translationMessages', 'messages')
+            ->join('k.domains', 'domains')
+            ->where('(k.text_key LIKE :value or messages.message LIKE :value) and domains.domain_name = :domain ')
+            ->setParameter('value',  '%' . $value . '%')
+            ->setParameter('domain', $domain)
+            ->getQuery()->getResult();
+    }
+
 
 
 

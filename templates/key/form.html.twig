@@ -19,29 +19,21 @@
 
 				<div>
 					{% for translationmessage in formdata.translationmessages %}
-
 						<p>
 							{{form_label(translationmessage.message, translationmessage.language.vars.value)}}
 							{{ form_widget(translationmessage.message) }}</p>
-
-
 					{% endfor %}
-
 				</div>
 				<div>
 					{{ form_row(formdata.domains) }}
 				</div>
-
-
 				<div>
 					{{ form_row(formdata.submit) }}
 				</div>
-
 			</div>
 			{{ form_end(formdata, {'render_rest': false}) }}
 			<div>
 				<a class="a_link"href="{{path("index_keys")}}"><button>Back</button></a>
 			</div>
-
 		</main>
 {% endblock content %}

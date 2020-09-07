@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Domain;
 use App\Entity\TranslationKey;
 use App\Entity\TranslationMessage;
-use App\Form\DomainsType;
 use App\Form\MessageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,11 +48,6 @@ class KeyController extends AbstractController
     {
         $data = [];
         $data['mode'] = 'modify';
-        $domains = $this->getDoctrine()
-            ->getRepository('App:Domain')
-            ->findAll();
-
-        $data['domains'] = $domains;
         $form = $this->createFormBuilder($translation_key)
             ->add('text_key')
             ->add(
@@ -174,7 +168,6 @@ class KeyController extends AbstractController
 
 
         if ($form->isSubmitted()) {
-
             $entitymanager = $this->getDoctrine()->getManager();
             $entitymanager->remove($translation_key);
             $entitymanager->flush();

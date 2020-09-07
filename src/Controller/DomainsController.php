@@ -3,13 +3,9 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Domain;
 use App\Entity\TranslationKey;
-use App\Form\MessageType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +24,6 @@ class DomainsController extends AbstractController
             ->findAll();
 
         $data['domains'] = $domains;
-
-
         return $this->render('key/domain/index.html.twig', $data);
     }
 
@@ -58,7 +52,6 @@ class DomainsController extends AbstractController
     public function editDomain(Request $request,Domain $domain){
         $data = [];
         $data['mode'] = 'modify';
-
         $form = $this->createFormBuilder($domain)
             ->add('domain_name')
             ->add('submit',
@@ -117,7 +110,6 @@ class DomainsController extends AbstractController
      */
     public function deleteDomian(Request $request, Domain $domain)
     {
-        $domain_empty = false;
         $findKey = $this->getDoctrine()
             ->getRepository(TranslationKey::class)
             ->findDomain($domain->getDomainName());
@@ -127,10 +119,7 @@ class DomainsController extends AbstractController
             ->add('domain_name')
             ->add('submit', SubmitType::class)
             ->getForm();
-
         $form->handleRequest($request);
-
-
         if ($form->isSubmitted()) {
 
             $entitymanager = $this->getDoctrine()->getManager();

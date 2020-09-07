@@ -3,21 +3,16 @@
 {% block content %}
 <header>
     <h1 class="delete">Confirm Delete Key</h1>
-
 </header>
 <main>
-
-
     {{ form_start(formdata) }}
     <div>
         {{ form_errors(formdata) }}
     </div>
-
     <div>
         <div>
            <h4>Do you want to delete the Key <span class="color_blue">{{ formdata.text_key.vars.value }} </span> and its messages?</h4>
         </div>
-
         <h4>Messages</h4>
         {% for message in formdata.translationmessages %}
             <p>
@@ -29,15 +24,12 @@
             {{ form_row(formdata.text_key) }}
             {{ form_row(formdata.translationmessages) }}
         </div>
-
         <div>
             {{ form_row(formdata.submit) }}
         </div>
-
     </div>
     {{ form_end(formdata) }}
     <ul>
-
         <li><a class="a_link"href="{{path("index_keys")}}">Back</a></li>
     </ul>
 </main>

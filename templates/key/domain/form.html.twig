@@ -3,29 +3,24 @@
 {% block content %}
     <header>
         <h1>{{mode == 'new' ? 'Add New Domain' : 'Modify Domain'}}</h1>
-
     </header>
     <main>
         {{ form_start(formdata) }}
         <div>
             {{ form_errors(formdata) }}
         </div>
-
         <div class="form_container">
             <div>
                 {{ form_label(formdata.domain_name, 'Domain Name') }}
                 {{ form_widget(formdata.domain_name) }}
             </div>
-
             <div>
                 {{ form_row(formdata.submit) }}
             </div>
-
         </div>
         {{ form_end(formdata) }}
         <div>
             <a class="a_link"href="{{path("index_domains")}}"><button>Back</button></a>
         </div>
-
     </main>
 {% endblock content %}
