@@ -39,7 +39,7 @@
 								<td>{{entry.id}}</td>
 								<td>{{entry.textKey}}</td>
 								{% for message in entry.translationMessages %}
-									<td>{{message.message|slice(0,15)}}
+									<td>{{message.message|slice(0,15)|raw}}
 										{% if message.message|length > 15 %}
 											...
 										{% endif %}</td>
