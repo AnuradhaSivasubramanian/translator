@@ -51,7 +51,7 @@ class IndexController extends AbstractController
                     'label'    => 'Show Keys with empty messages',
                     'required' => false,]
             )
-            ->add('submit', SubmitType::class)
+            ->add('search', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
 

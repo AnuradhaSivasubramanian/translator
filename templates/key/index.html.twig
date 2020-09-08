@@ -18,8 +18,13 @@
 				<p>{{ form_row(formdata.filter_domain) }}</p>
 				<p>{{ form_row(formdata.empty_keys) }}</p>
 				<p>
-					{{ form_row(formdata.submit) }}</p>
+					{{ form_row(formdata.search) }}</p>
 				{{ form_end(formdata) }}
+			</div>
+			<div>
+				<a class="a_link"href="{{path("index_domains")}}"><button class="button-primary">Domains</button></a>
+				<a class="a_link"href="{{path("upload_csv")}}"><button class="button-primary">Upload File</button></a>
+				<a class="a_link"href="{{path("download_csv")}}"><button class="button-primary">Download File</button></a>
 			</div>
 			<div class="keys_table">
 				{% if translation_keys is not empty %}
@@ -28,6 +33,7 @@
 							<th>ID</th>
 							<th>Text</th>
 							<th>NL</th>
+							<th>Last Updated</th>
 							<th>EN</th>
 							<th>Last Updated</th>
 							<th>&nbsp;</th>
@@ -39,12 +45,26 @@
 								<td>{{entry.id}}</td>
 								<td>{{entry.textKey}}</td>
 								{% for message in entry.translationMessages %}
+								{% if message.language == 'nl'%}
 									<td>{{message.message|slice(0,15)|raw}}
 										{% if message.message|length > 15 %}
 											...
-										{% endif %}</td>
+										{% endif %}
+									</td>
+								<td>{% if message.updated is not empty %}{{ message.updated|date('Y-m-d H:i:s', "Europe/Paris")  }}{% endif %}</td>
+								{% endif %}
 								{% endfor %}
-								<td>{% if entry.updated is not empty %}{{ entry.updated|date('Y-m-d H:i:s', "Europe/Paris")  }}{%endif %}</td>
+								{% for message in entry.translationMessages %}
+							{% if message.language == 'en'%}
+								<td>{{message.message|slice(0,15)|raw}}
+									{% if message.message|length > 15 %}
+									...
+									{% endif %}
+								</td>
+								<td>{% if message.updated is not empty %}{{ message.updated|date('Y-m-d H:i:s', "Europe/Paris")  }}{% endif %}</td>
+								{% endif %}
+								{% endfor %}
+
 								<td>
 									<a class="action" href="{{path("view_key", {'id_key': entry.id})}}"><button class="button-secondary">View</button></a>
 								</td>
@@ -62,7 +82,6 @@
 			{% if translation_keys is empty %}
 				<p>No Entry Found!!</p>
 			{% endif %}
-				<a class="a_link"href="{{path("index_domains")}}"><button class="button-secondary">Domains</button></a>
-			<a class="a_link"href="{{path("upload_csv")}}"><button class="button-secondary">Upload csv files</button></a>
+
 		</main>
 {%  endblock content %}

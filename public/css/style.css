@@ -9,7 +9,7 @@ body {
   margin: 0;
   padding: 0;
 
-  font-family: "Space Mono", monospace;
+  font-family: "Times New Roman";
 }
 
 header {
@@ -156,8 +156,8 @@ dd {
 }
 
 .button-primary {
-  background-color: #0055dd;
-  color: white;
+  background-color: #5ab9ea;
+  color: black;
   height: 40px;
   width: 150px;
   font-size: 1em;
@@ -169,9 +169,9 @@ dd {
 
 .button-secondary {
   background-color: #5ab9ea;
-  color: white;
+  color: black;
   height: 25px;
-  width: 80px;
+  width: 100px;
   font-size: 0.8em;
   appearance: none;
   cursor: pointer;
@@ -218,7 +218,9 @@ dd {
   color: #0055dd;
 }
 
-.form_container{
+.upload_form{
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+  height: 200px;
 }

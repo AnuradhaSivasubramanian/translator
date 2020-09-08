@@ -9,6 +9,7 @@ use App\Form\MessageType;
 use App\Service\CsvFileToArray;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -196,7 +197,7 @@ class KeyController extends AbstractController
 
     /**
      *
-     * @Route("/keys/uploadcsv", name="upload_csv")
+     * @Route("/keys/upload", name="upload_csv")
      * @param Request $request
      * @return Response
      */
@@ -207,7 +208,7 @@ class KeyController extends AbstractController
                 ['required' => false])
             ->add('en_file', FileType::class,
                 ['required' => false])
-            ->add('submit', SubmitType::class)
+            ->add('upload', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
 
@@ -292,6 +293,49 @@ class KeyController extends AbstractController
             $data['formdata'] = $form->createView();
         }
         return $this->render('key/upload.html.twig', $data);
+    }
+
+    /**
+     * @Route("/keys/download", name="download_csv")
+     * @param Request $request
+     * @return Response
+     */
+    public function downloadCsv(Request $request){
+        $form = $this->createFormBuilder()
+            ->add(
+                'nl_file',
+                CheckboxType::class, [
+                    'label'    => 'Nederlands',
+                    'required' => false,]
+            )->add(
+                'en_file',
+                CheckboxType::class, [
+                    'label'    => 'English',
+                    'required' => false,]
+            )->add('download', SubmitType::class)
+            ->getForm();
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()){
+            $translation_keys = $this->getDoctrine()
+                ->getRepository('App:TranslationKey')
+                ->findAll();
+            $result_array_nl = [];
+            foreach($translation_keys as $translation_key){
+                $translation_messages = $translation_key->getTranslationMessages();
+                foreach($translation_messages as $translation_message){
+                    if($translation_message->getLanguage() === 'nl' and $translation_message->getMessage() !== ''){
+                        $result_array_nl[] = array('key' => $translation_key->getTextKey(), 'message' => $translation_message->getMessage());
+                    }
+                }
+            }
+        dd($result_array_nl);
+            return $this->redirectToRoute('index_keys');
+        } else {
+            $data['formdata'] = $form->createView();
+        }
+
+        return $this->render('key/download.html.twig', $data);
     }
 
 

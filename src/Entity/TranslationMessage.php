@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\TranslationMessageRepository;
 use App\Entity\TranslationKey;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=TranslationMessageRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class TranslationMessage
 {
@@ -38,6 +40,13 @@ class TranslationMessage
      * @ORM\JoinColumn(nullable=false)
      */
     private $translation_key;
+
+    /**
+     * @var datetime $updated
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     */
+    private $updated;
 
     /**
      * @return int|null
@@ -121,5 +130,19 @@ class TranslationMessage
         $this->translation_key = $translation_key;
 
         return $this;
+    }
+
+    /**
+     * Gets triggered every time on update
+
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updated = new \DateTime("now");
+    }
+
+    public function getUpdated(){
+        return $this->updated;
     }
 }

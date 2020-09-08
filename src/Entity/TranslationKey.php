@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=TranslationKeyRepository::class)
- * @ORM\HasLifecycleCallbacks()
+ *
  */
 class TranslationKey
 {
@@ -39,12 +39,7 @@ class TranslationKey
      */
      private $domains;
 
-    /**
-     * @var datetime $updated
-     *
-     * @ORM\Column(type="datetime", nullable = true)
-     */
-    private $updated;
+
 
     /**
      * TranslationKey constructor.
@@ -149,17 +144,4 @@ class TranslationKey
         return $this;
     }
 
-    /**
-     * Gets triggered every time on update
-
-     * @ORM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        $this->updated = new \DateTime("now");
-    }
-
-    public function getUpdated(){
-        return $this->updated;
-    }
 }
