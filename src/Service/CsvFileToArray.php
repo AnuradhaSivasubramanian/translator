@@ -23,16 +23,16 @@ class CsvFileToArray extends AbstractController
             $language = 'en';
         } else {
 
-            return $error = ['error_message' => 'Invalid file name/extension'];
+            return $error = ['error_message' => 'Please upload a file with valid name'];
         }
-        $newFilename = $originalFilename.$file->getClientOriginalExtension();
+        $newFilename = $originalFilename.".".$file->getClientOriginalExtension();
         $file->move($destination, $newFilename);
         ini_set('auto_detect_line_endings',TRUE);
         if (($handle = fopen($this->getParameter('kernel.project_dir').'/public/uploads/' . $newFilename, "r")) !== FALSE) {
 
             while (($data = fgetcsv($handle, 0, ';')) !== FALSE and sizeof($data_array) <= 35) {
                 if(count($data) !== 2) {
-                    return $error = ['error_message' => 'Inconsistent data in the file'];
+                    return $error = ['error_message' => 'Please upload a file with consistent data'];
                 }
                 $data_array[] = array('key' => $data[0], $language => $data[1] );
 

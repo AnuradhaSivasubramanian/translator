@@ -7,13 +7,16 @@ namespace App\Controller;
 use App\Entity\TranslationKey;
 use App\Entity\TranslationMessage;
 use App\Service\CsvFileToArray;
+use finfo;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\File;
 
 class FileHandlingController extends AbstractController
 {
@@ -27,9 +30,27 @@ class FileHandlingController extends AbstractController
     {
         $form = $this->createFormBuilder()
             ->add('nl_file', FileType::class,
-                ['required' => false])
+                ['required' => false,
+                    'constraints' => [
+                        new File([
+                            'mimeTypes' => [
+                                'text/csv',
+                                'text/plain',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid CSV document',
+                        ])
+                    ]])
             ->add('en_file', FileType::class,
-                ['required' => false])
+                ['required' => false,
+                    'constraints' => [
+                        new File([
+                            'mimeTypes' => [
+                                'text/csv',
+                                'text/plain',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid CSV document',
+                        ])
+                    ]])
             ->add('upload', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
@@ -42,6 +63,8 @@ class FileHandlingController extends AbstractController
             $csv_data_en = [];
             $fileNL = $form['nl_file']->getData();
             $fileEN = $form['en_file']->getData();
+
+
             if($fileNL !== null){
                 $csv_data_nl = $csvFileToArray->convertCsvToArray($fileNL);
             }
@@ -50,12 +73,14 @@ class FileHandlingController extends AbstractController
             }
 
             if(array_key_exists("error_message",$csv_data_nl)  ){
-                $data['error'] = $csv_data_nl['error_message'];
+                $error = new FormError($csv_data_nl['error_message']);
+                $form->get('nl_file')->addError($error);
                 $data['formdata'] = $form->createView();
                 return $this->render('key/upload.html.twig', $data);
             }
             if(array_key_exists("error_message", $csv_data_en)){
-                $data['error'] = $csv_data_en['error_message'];
+                $error = new FormError($csv_data_en['error_message']);
+                $form->get('en_file')->addError($error);
                 $data['formdata'] = $form->createView();
                 return $this->render('key/upload.html.twig', $data);
             }

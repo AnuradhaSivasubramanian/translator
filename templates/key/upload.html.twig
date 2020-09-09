@@ -8,19 +8,18 @@
     <main>
         <div class="form_container">
             {{ form_start(formdata) }}
-            <div>
+             <div>
                 {{ form_errors(formdata) }}
             </div>
 
             <div class="upload_form">
                 <div>{{ form_row(formdata.nl_file) }}</div>
                 <div>{{ form_row(formdata.en_file) }}</div>
-            {% if error is defined %}<p>{{ error }}</p>{% endif %}
                 <div>
                     {{ form_row(formdata.upload) }}
                 </div>
             </div>
-
+            {{ form_end(formdata) }}
 
         </div>
 
