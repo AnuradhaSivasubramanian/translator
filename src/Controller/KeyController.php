@@ -9,7 +9,7 @@ use App\Form\MessageType;
 use App\Service\CsvFileToArray;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -303,15 +303,13 @@ class KeyController extends AbstractController
     public function downloadCsv(Request $request){
         $form = $this->createFormBuilder()
             ->add(
-                'nl_file',
-                CheckboxType::class, [
-                    'label'    => 'Nederlands',
-                    'required' => false,]
-            )->add(
-                'en_file',
-                CheckboxType::class, [
-                    'label'    => 'English',
-                    'required' => false,]
+                'chose_file',
+                ChoiceType::class, [
+                    'choices'  => [
+                        'Nederlands' => 'nl',
+                        'Engels' => 'en',
+
+                    ]]
             )->add('download', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
@@ -320,17 +318,29 @@ class KeyController extends AbstractController
             $translation_keys = $this->getDoctrine()
                 ->getRepository('App:TranslationKey')
                 ->findAll();
-            $result_array_nl = [];
+            $result_array = [];
+
+            $language = $form['chose_file']->getData();
+
             foreach($translation_keys as $translation_key){
                 $translation_messages = $translation_key->getTranslationMessages();
                 foreach($translation_messages as $translation_message){
-                    if($translation_message->getLanguage() === 'nl' and $translation_message->getMessage() !== ''){
-                        $result_array_nl[] = array('key' => $translation_key->getTextKey(), 'message' => $translation_message->getMessage());
+                    if($translation_message->getLanguage() === $language and $translation_message->getMessage() !== ''){
+                        $result_array[$translation_key->getTextKey()]  = $translation_message->getMessage();
                     }
                 }
             }
-        dd($result_array_nl);
-            return $this->redirectToRoute('index_keys');
+
+            $destination = $this->getParameter('kernel.project_dir').'\public\downloads';
+            $filename = $destination."/".$language.date("Y_m_d_His").".php";
+            file_put_contents($filename, '<?php return ' . var_export($result_array, true) . ';');
+            $response = new Response();
+            $response->setContent(file_get_contents($filename));
+            $response->headers->set('Content-Type', 'text/php');
+            $response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
+
+            return $response;
+
         } else {
             $data['formdata'] = $form->createView();
         }
