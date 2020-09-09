@@ -28,7 +28,8 @@
 			</div>
 			<div class="keys_table">
 				{% if translation_keys is not empty %}
-					<table class="list">
+					<table id="keys" class="list">
+						<thead>
 						<tr>
 							<th>ID</th>
 							<th>Text</th>
@@ -40,42 +41,46 @@
 							<th>&nbsp;</th>
 							<th>&nbsp;</th>
 						</tr>
+						</thead>
+						<tbody>
 						{%  for entry in translation_keys %}
 							<tr>
 								<td>{{entry.id}}</td>
 								<td>{{entry.textKey}}</td>
 								{% for message in entry.translationMessages %}
-								{% if message.language == 'nl'%}
-									<td>{{message.message|slice(0,15)|raw}}
-										{% if message.message|length > 15 %}
-											...
-										{% endif %}
-									</td>
-								<td>{% if message.updated is not empty %}{{ message.updated|date('Y-m-d H:i:s', "Europe/Paris")  }}{% endif %}</td>
-								{% endif %}
+									{% if message.language == 'nl'%}
+										<td>{{message.message|slice(0,15)|raw}}
+											{% if message.message|length > 15 %}
+												...
+											{% endif %}
+										</td>
+										<td>{% if message.updated is not empty %}{{ message.updated|date('Y-m-d H:i:s', "Europe/Paris")  }}{% endif %}</td>
+									{% endif %}
 								{% endfor %}
 								{% for message in entry.translationMessages %}
-							{% if message.language == 'en'%}
-								<td>{{message.message|slice(0,15)|raw}}
-									{% if message.message|length > 15 %}
-									...
+									{% if message.language == 'en'%}
+										<td>{{message.message|slice(0,15)|raw}}
+											{% if message.message|length > 15 %}
+												...
+											{% endif %}
+										</td>
+										<td>{% if message.updated is not empty %}{{ message.updated|date('Y-m-d H:i:s', "Europe/Paris")  }}{% endif %}</td>
 									{% endif %}
-								</td>
-								<td>{% if message.updated is not empty %}{{ message.updated|date('Y-m-d H:i:s', "Europe/Paris")  }}{% endif %}</td>
-								{% endif %}
 								{% endfor %}
 
 								<td>
-									<a class="action" href="{{path("view_key", {'id_key': entry.id})}}"><button class="button-secondary">View</button></a>
+									<a class="action" href="{{path("view_key", {'id_key': entry.id})}}">View</a>
 								</td>
 								<td>
-									<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}"><button class="button-secondary"> Edit</button></a>
+									<a class="action" href="{{path("modify_key", {'translation_key': entry.id})}}">Edit</a>
 								</td>
 								<td>
-									<a class="action" href="{{path("delete_key", {'translation_key': entry.id})}}"><button class="button-secondary">Delete</button></a>
+									<a class="action" href="{{path("delete_key", {'translation_key': entry.id})}}">Delete</a>
 								</td>
 							</tr>
 						{% endfor %}
+						</tbody>
+
 					</table>
 				{% endif %}
 			</div>

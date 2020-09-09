@@ -9,7 +9,7 @@
 		</title>
 		{% block stylesheets %}
 			<link rel="stylesheet" href="/css/style.css">
-			<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Space+Mono&display=swap" rel="stylesheet">
+			<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 		{% endblock stylesheets %}
 		{% endblock head %}
 	</head>
@@ -21,6 +21,10 @@
 				{% endblock %}
 			</div>
 		{% endblock body%}
-		{% block javascripts %}{% endblock %}
+		{% block javascripts %}
+			<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+			<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+			<script src="/js/script.js"></script>
+		{% endblock %}
 	</body>
 </html>

@@ -77,30 +77,30 @@ footer {
 
 /* Lists */
 
-table {
-  border-collapse: collapse;
-  vertical-align: top;
-}
+/*table {*/
+/*  border-collapse: collapse;*/
+/*  vertical-align: top;*/
+/*}*/
 
-table.list {
-  width: 90%;
-}
+/*table.list {*/
+/*  width: 90%;*/
+/*}*/
 
-table.list tr {
-  height: 30px;
-}
+/*table.list tr {*/
+/*  height: 30px;*/
+/*}*/
 
-table.list tr td {
-  border: 1px solid #c1c8e4;
+/*table.list tr td {*/
+/*  border: 1px solid #c1c8e4;*/
 
-}
+/*}*/
 
-table.list tr th {
-  border: 1px solid #5680e9;
-  background: #5ab9ea;
-  color: black;
-  text-align: center;
-}
+/*table.list tr th {*/
+/*  border: 1px solid #5680e9;*/
+/*  background: #5ab9ea;*/
+/*  color: black;*/
+/*  text-align: center;*/
+/*}*/
 
 .main_a_links {
   text-decoration: none;

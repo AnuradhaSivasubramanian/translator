@@ -7,7 +7,8 @@
     <main>
         <a class="action" href="{{path("new_domain")}}">Create a new Domain</a>
         <div class="domain_table">
-                <table class="list">
+                <table id="domains" class="list">
+                    <thead>
                     <tr>
                         <th>ID</th>
                         <th>Domain Name</th>
@@ -15,6 +16,8 @@
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
                     </tr>
+                    </thead>
+                    <tbody>
                     {%  for entry in domains %}
                         <tr>
                             <td>{{entry.id}}</td>
@@ -30,6 +33,9 @@
                             </td>
                         </tr>
                     {% endfor %}
+                    </tbody>
+
+
                 </table>
         </div>
         <a class="a_link"href="{{path("index_keys")}}"><button class="button-secondary">Back</button></a>
