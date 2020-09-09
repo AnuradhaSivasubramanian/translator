@@ -60,38 +60,26 @@ class IndexController extends AbstractController
 
             $data['search'] = true;
             $searchdata = $form->getData();
+            $result_keys = [];
+            $key_repo = $this->getDoctrine()
+                ->getRepository(TranslationKey::class);
 
             if($searchdata['empty_keys'] === true){
                 if($searchdata['filter_domain'] === null){
-                    $result_keys = $this->getDoctrine()
-                        ->getRepository(TranslationKey::class)
-                        ->findKeysWithEmptyMessages();
-                    $data['translation_keys'] = $result_keys;
+                    $result_keys = $key_repo->findKeysWithEmptyMessages();
                 } else {
-                    $result_keys = $this->getDoctrine()
-                        ->getRepository(TranslationKey::class)
-                        ->findKeysInADomainWithEmptyMessages($searchdata['filter_domain']->getDomainName());
-                    $data['translation_keys'] = $result_keys;
+                    $result_keys = $key_repo->findKeysInADomainWithEmptyMessages($searchdata['filter_domain']->getDomainName());
                 }
             } else {
                 if($searchdata['search_value'] !== null and $searchdata['filter_domain'] !== null) {
-                    $result_keys = $this->getDoctrine()
-                        ->getRepository(TranslationKey::class)
-                        ->FindKeyByValueInADomain($searchdata['search_value'],$searchdata['filter_domain']->getDomainName());
-                    $data['translation_keys'] = $result_keys;
+                    $result_keys = $key_repo->FindKeyByValueInADomain($searchdata['search_value'],$searchdata['filter_domain']->getDomainName());
                 } else if($searchdata['filter_domain'] !== null){
-                     $result_keys = $this->getDoctrine()
-                        ->getRepository(TranslationKey::class)
-                        ->findDomain($searchdata['filter_domain']->getDomainName());
-                     $data['translation_keys'] = $result_keys;
+                    $result_keys = $key_repo->findDomain($searchdata['filter_domain']->getDomainName());
                 } else if($searchdata['search_value'] !== null) {
-                        $result_keys = $this->getDoctrine()
-                        ->getRepository(TranslationKey::class)
-                        ->findKeysByValue($searchdata['search_value']);
-                     $data['translation_keys'] = $result_keys;
+                    $result_keys = $key_repo->findKeysByValue($searchdata['search_value']);
                 }
                 }
-
+            $data['translation_keys'] = $result_keys;
             $data['formdata'] = $form->createView();
             return $this->render('key/index.html.twig', $data);
         }

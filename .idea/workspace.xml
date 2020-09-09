@@ -20,12 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="162f1e85-9bfb-4461-b7e1-5eec36a177a8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/js/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/FileHandlingController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/DomainType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/key/domain/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/domain/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/key/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/downloads/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/DomainsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DomainsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/IndexController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/KeyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/KeyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/CsvFileToArray.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/CsvFileToArray.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/key/upload.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/upload.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +169,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/messages.nl_nl.php" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/en.csv" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Twig" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -191,7 +195,7 @@
       <workItem from="1599460496337" duration="27005000" />
       <workItem from="1599546701551" duration="25909000" />
       <workItem from="1599584417441" duration="720000" />
-      <workItem from="1599632838868" duration="10298000" />
+      <workItem from="1599632838868" duration="20984000" />
     </task>
     <servers />
   </component>
@@ -219,19 +223,20 @@
     </state>
     <state x="-1223" y="326" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1599214526201" />
     <state x="558" y="258" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1599488687759" />
-    <state x="-1296" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599639020967">
+    <state x="-1296" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599655882048">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1296" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1599639020967" />
+    <state x="-1296" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1599655882048" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1599492122417" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1599487559258">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599487559258" />
-    <state x="-1157" y="247" key="NewPhpClassDialog" timestamp="1599638793094">
+    <state x="-1234" y="211" key="FileChooserDialogImpl" timestamp="1599646920486">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1157" y="247" key="NewPhpClassDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1599638793094" />
+    <state x="-1234" y="211" key="FileChooserDialogImpl/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1599646920486" />
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599487559258" />
+    <state x="-1157" y="247" key="NewPhpClassDialog" timestamp="1599655855583">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1157" y="247" key="NewPhpClassDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1599655855583" />
     <state x="-1126" y="447" key="NewPhpFileDialog" timestamp="1599214595671">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>

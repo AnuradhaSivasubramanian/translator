@@ -15,7 +15,7 @@
             <div class="upload_form">
                 <div>{{ form_row(formdata.nl_file) }}</div>
                 <div>{{ form_row(formdata.en_file) }}</div>
-
+            {% if error is defined %}<p>{{ error }}</p>{% endif %}
                 <div>
                     {{ form_row(formdata.upload) }}
                 </div>
