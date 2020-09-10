@@ -136,6 +136,7 @@ class FileHandlingController extends AbstractController
             $language .= $language === 'nl' ? "_nl" : "_gb";
             $filename = "messages.".$language.".php";
             $response = new Response();
+
             $response->setContent('<?php return ' . var_export($result_array, true) . ';');
             $response->headers->set('Content-Type', 'text/php');
             $response->headers->set('Content-Disposition', 'attachment; filename='.$filename);

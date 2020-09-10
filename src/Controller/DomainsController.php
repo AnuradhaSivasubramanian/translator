@@ -101,7 +101,7 @@ class DomainsController extends AbstractController
     {
         $findKey = $this->getDoctrine()
             ->getRepository(TranslationKey::class)
-            ->findDomain($domain->getDomainName());
+            ->findKeysInADomain($domain->getDomainName());
 
         $data['keys_found'] = $findKey;
         $form = $this->createForm(DomainType::class, $domain);

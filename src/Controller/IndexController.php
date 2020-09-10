@@ -74,9 +74,11 @@ class IndexController extends AbstractController
                 if($searchdata['search_value'] !== null and $searchdata['filter_domain'] !== null) {
                     $result_keys = $key_repo->FindKeyByValueInADomain($searchdata['search_value'],$searchdata['filter_domain']->getDomainName());
                 } else if($searchdata['filter_domain'] !== null){
-                    $result_keys = $key_repo->findDomain($searchdata['filter_domain']->getDomainName());
+                    $result_keys = $key_repo->findKeysInADomain($searchdata['filter_domain']->getDomainName());
                 } else if($searchdata['search_value'] !== null) {
                     $result_keys = $key_repo->findKeysByValue($searchdata['search_value']);
+                } else {
+                    $result_keys = $translation_keys;
                 }
                 }
             $data['translation_keys'] = $result_keys;

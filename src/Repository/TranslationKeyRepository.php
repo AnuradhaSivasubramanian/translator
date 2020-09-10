@@ -38,7 +38,7 @@ class TranslationKeyRepository extends ServiceEntityRepository
      * @param string $value
      * @return array|null
      */
-    public function findDomain(string $value): ?array
+    public function findKeysInADomain(string $value): ?array
     {
 
         return $this->createQueryBuilder('k')
