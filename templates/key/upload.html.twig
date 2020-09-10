@@ -7,22 +7,36 @@
     </header>
     <main>
         <div class="form_container">
-            {{ form_start(formdata) }}
+            {{ form_start(uploadForm) }}
              <div>
-                {{ form_errors(formdata) }}
+                {{ form_errors(uploadForm) }}
             </div>
 
             <div class="upload_form">
-                <div>{{ form_row(formdata.nl_file) }}</div>
-                <div>{{ form_row(formdata.en_file) }}</div>
+                <div>{{ form_row(uploadForm.nl_file) }}</div>
+                <div>{{ form_row(uploadForm.en_file) }}</div>
                 <div>
-                    {{ form_row(formdata.upload) }}
+                    {{ form_row(uploadForm.upload) }}
                 </div>
             </div>
-            {{ form_end(formdata) }}
+            {{ form_end(uploadForm) }}
 
         </div>
+        <div class="form_container">
+            {{ form_start(downloadForm) }}
+            <div>
+                {{ form_errors(downloadForm) }}
+            </div>
 
+            <div class="upload_form">
+                <div>{{ form_row(downloadForm.chose_file) }}</div>
+                <div>
+                    {{ form_row(downloadForm.download) }}
+                </div>
+            </div>
+            {{ form_end(downloadForm) }}
+
+        </div>
 
         <div>
             <a class="a_link"href="{{path("index_keys")}}"><button>Back</button></a>
