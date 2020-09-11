@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\TranslationKey;
 use App\Entity\TranslationMessage;
+use App\Entity\Domain;
 use App\Form\DownloadType;
 use App\Form\UploadType;
 use App\Service\CsvFileToArray;
@@ -20,22 +21,23 @@ class FileHandlingController extends AbstractController
 {
     /**
      *
-     * @Route("/keys/filehandle", name="file_handle")
+     * @Route("/filehandle", name="file_handle")
      * @param Request $uploadRequest
-     * @param Request $downloadRequest
      * @param CsvFileToArray $csvFileToArray
      * @return Response
      */
-    public function file_handle(Request $uploadRequest,Request $downloadRequest, CsvFileToArray $csvFileToArray)
+    public function file_handle(Request $uploadRequest, CsvFileToArray $csvFileToArray)
     {
         $uploadForm = $this->createForm(UploadType::class);
         $uploadForm->handleRequest($uploadRequest);
-        $downloadForm = $this->createForm(DownloadType::class);
-        $downloadForm->handleRequest($downloadRequest);
+
+        $domains = $this->getDoctrine()
+            ->getRepository('App:Domain')
+            ->findAll();
+        $data['domains'] = $domains;
 
 
         if ($uploadForm->isSubmitted()) {
-
             $csv_data_nl = [];
             $csv_data_en = [];
             $fileNL = $uploadForm['nl_file']->getData();
@@ -118,33 +120,46 @@ class FileHandlingController extends AbstractController
             }
 
         }
+        $data['uploadForm'] = $uploadForm->createView();
+        return $this->render('key/upload.html.twig', $data);
+    }
 
-        if($downloadForm->isSubmitted()){
-            $result_array = [];
-            $translation_keys = $this->getDoctrine()
-                ->getRepository('App:TranslationKey')
-                ->findAll();
-            $language = $downloadForm['chose_file']->getData();
-            foreach($translation_keys as $translation_key){
+    /**
+     *
+     * @Route("/filehandle/{filter}", name="download_file")
+     * @param string $filter
+     * @return Response
+     */
+    public function download_file(string $filter){
+
+        $result_array = [];
+        $language = substr($filter,strlen($filter) -2);
+        $keys_repo = $this->getDoctrine()
+            ->getRepository('App:TranslationKey');
+        $translation_keys = strlen($filter) === 2 ? $keys_repo->findAll() : $keys_repo->findKeysInADomain(substr($filter, 0,strlen($filter) -3));
+        if(count($translation_keys) > 0) {
+            foreach ($translation_keys as $translation_key) {
                 $translation_messages = $translation_key->getTranslationMessages();
-                foreach($translation_messages as $translation_message){
-                    if($translation_message->getLanguage() === $language and $translation_message->getMessage() !== ''){
-                        $result_array[$translation_key->getTextKey()]  = $translation_message->getMessage();
+                foreach ($translation_messages as $translation_message) {
+                    if ($translation_message->getLanguage() === $language and $translation_message->getMessage() !== '') {
+                        $result_array[$translation_key->getTextKey()] = $translation_message->getMessage();
                     }
                 }
             }
-            $language .= $language === 'nl' ? "_nl" : "_gb";
-            $filename = "messages.".$language.".php";
-            $response = new Response();
 
-            $response->setContent('<?php return ' . var_export($result_array, true) . ';');
-            $response->headers->set('Content-Type', 'text/php');
-            $response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
-            return $response;
         }
-        $data['uploadForm'] = $uploadForm->createView();
-        $data['downloadForm'] = $downloadForm->createView();
-        return $this->render('key/upload.html.twig', $data);
+        $language .= $language === 'nl' ? "_nl" : "_gb";
+        if(strlen($filter) === 2){
+            $filename = "messages.".$language.".php";
+        } else {
+            $filename = substr($filter, 0,strlen($filter) -3).".".$language.".php";
+        }
+        $response = new Response();
+        $response->setContent( '<?php return ' . var_export($result_array, true) . ';');
+        $response->headers->set('Content-Type', 'text/php');
+        $response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
+        return $response;
+
     }
 
 }

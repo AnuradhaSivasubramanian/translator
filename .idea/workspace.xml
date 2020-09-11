@@ -21,10 +21,12 @@
   <component name="ChangeListManager">
     <list default="true" id="162f1e85-9bfb-4461-b7e1-5eec36a177a8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DomainsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DomainsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FileHandlingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FileHandlingController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/IndexController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/TranslationKeyRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TranslationKeyRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/KeyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/KeyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/DownloadType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/key/delete.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/delete.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/key/upload.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/key/upload.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +194,7 @@
       <workItem from="1599584417441" duration="720000" />
       <workItem from="1599632838868" duration="27028000" />
       <workItem from="1599736689701" duration="4638000" />
-      <workItem from="1599746043692" duration="6098000" />
+      <workItem from="1599746043692" duration="14214000" />
     </task>
     <servers />
   </component>

@@ -1,8 +1,8 @@
 {% extends "key/index.html.twig" %}
-{% block title %}Upload{% endblock title %}
+{% block title %}Translator{% endblock title %}
 {% block content %}
     <header>
-        <h1>Upload the 2 Translation message files here...</h1>
+        <h1>Upload or Download Translation message files here...</h1>
 
     </header>
     <main>
@@ -22,19 +22,15 @@
             {{ form_end(uploadForm) }}
 
         </div>
-        <div class="form_container">
-            {{ form_start(downloadForm) }}
-            <div>
-                {{ form_errors(downloadForm) }}
-            </div>
-
-            <div class="upload_form">
-                <div>{{ form_row(downloadForm.chose_file) }}</div>
-                <div>
-                    {{ form_row(downloadForm.download) }}
-                </div>
-            </div>
-            {{ form_end(downloadForm) }}
+        <div>
+            <ul>
+                <li> <p>All Keys in NL</p><a class="a_link"href="{{path("download_file", {'filter': 'nl'})}}"><button>Download</button></a></li>
+                <li> <p>All Keys in EN</p><a class="a_link"href="{{path("download_file",  {'filter': 'en'})}}"><button>Download</button></a></li>
+                {% for domain in domains %}
+                <li><p>All {{ domain.domainName }} Keys in NL</p> <a class="a_link"href="{{path("download_file",  {'filter': domain.domainName~'_nl'})}}"><button>Download</button></a></li>
+                <li> <p>All {{ domain.domainName }} Keys in EN</p><a class="a_link"href="{{path("download_file",  {'filter': domain.domainName~'_en'})}}"><button>Download</button></a></li>
+                {% endfor %}
+            </ul>
 
         </div>
 

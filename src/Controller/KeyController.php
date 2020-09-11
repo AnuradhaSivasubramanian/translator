@@ -24,7 +24,7 @@ class KeyController extends AbstractController
 
     /**
      *
-     * @Route("/keys/view/{id_key}", name="view_key")
+     * @Route("/view/{id_key}", name="view_key")
      * @param int $id_key
      * @return Response
      */
@@ -43,7 +43,7 @@ class KeyController extends AbstractController
 
     /**
      *
-     * @Route("/keys/modify/{translation_key}", name="modify_key")
+     * @Route("/modify/{translation_key}", name="modify_key")
      * @param Request $request
      * @param TranslationKey $translation_key
      * @return RedirectResponse|Response
@@ -96,7 +96,7 @@ class KeyController extends AbstractController
 
     /**
      *
-     * @Route("/keys/new", name="new_key")
+     * @Route("/new", name="new_key")
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -161,7 +161,7 @@ class KeyController extends AbstractController
 
     /**
      *
-     * @Route("/keys/delete/{translation_key}", name="delete_key")
+     * @Route("/delete/{translation_key}", name="delete_key")
      * @param Request $request
      * @param TranslationKey $translation_key
      * @return Response
